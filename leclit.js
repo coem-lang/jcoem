@@ -14,11 +14,11 @@
     }
 
     /**
-     * Return definition of given string.
+     * Return definitions of given string.
      * @param  {String} s String to define.
-     * @return {String}   Definition of string, if exists.
+     * @return {Array}   Array of definitions, if exists.
      */
-    define(s) {
+    definitions(s) {
 
     }
 
