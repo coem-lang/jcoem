@@ -14,11 +14,20 @@
     }
 
     /**
-     * Return definitions of given string.
+     * Returns definitions of given string.
      * @param  {String} s String to define.
      * @return {Array}   Array of definitions, if exists.
      */
     definitions(s) {
+
+    }
+
+    /**
+     * Returns etymologies of given string.
+     * @param  {String} s String to get etymologies for.
+     * @return {Array}   Array of etymologies, if exists.
+     */
+    etymologies(s) {
 
     }
 
