@@ -89,6 +89,16 @@
     anagram(s) {
 
     }
+
+    /**
+     * Appends given string as a new paragraph in the body.
+     * @param  {String} s String to append to the body.
+     */
+    print(s) {
+      let p = document.createElement("p");
+      p.innerText = s;
+      document.body.appendChild(p);
+    }
   }
   window.LecLit = LecLit;
 })();
