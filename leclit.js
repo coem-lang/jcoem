@@ -38,7 +38,7 @@
      * @return {Array}   Array of antonyms, if exists.
      * @see synonyms
      */
-    synonyms(s) {
+    antonyms(s) {
 
     }
 
