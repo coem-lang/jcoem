@@ -4,14 +4,62 @@
   <meta charset="utf-8">
   <title></title>
   <script src="leclit.js"></script>
+  <style>
+    body {
+      display: grid;
+      grid-template-columns: 50% 50%;
+    }
+    p {
+      line-height: 1;
+      white-space: pre;
+      font-size: 24px;
+      margin: 4em;
+    }
+    .operator {
+      display: inline-block;
+      margin: 0 .1em;
+    }
+  </style>
 </head>
 <body>
-  <script>
+  <p>#using daisychain
+#using passingoftime = 1
+
+#be gentle
+
+let perhaps "me<span class="operator">|</span>I";
+let me be perhaps "w?reckless";
+and let me be "strong".
+
+maybe today (certainty = 0.8);
+iffy (today) {
+  I;
+  "in";
+  intersect("sorrow", "hope");
+  & print.
+} butfor {
+  "not today";
+  & print.
+}</p>
+  <p id="poem"></p>
+  <!-- <script>
     let leclit = new LecLit();
     leclit.print("Scrambling the string \"i love you samantha\":");
     for (let i = 0; i < 5; i++) {
       leclit.print(leclit.scramble("i love you samantha", false));
     }
+  </script> -->
+  <script>
+    writePoem = () => {
+      let p = document.getElementById("poem");
+      let poem = "";
+      poem += "I am " + ((Math.random() > 0.5) ? "wreckless" : "reckless") + " and strong";
+      poem += "\nin";
+      poem += ((Math.random() > 0.5) ? "\n  h\nsorrow\n  p\n  e" : "\n      h\nsorrow\n      p\n      e");
+      ((Math.random() < 0.8) ? p.innerText = poem : p.innerText = "not today");
+    };
+    writePoem();
+    setInterval(writePoem, 1000);
   </script>
 </body>
 </html>
