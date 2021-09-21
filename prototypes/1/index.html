@@ -25,6 +25,7 @@
       padding: 0 0.05em;
       border-radius: 5px;
       position: relative;
+      margin: -0.05em;
     }
     .token:hover {
       background-color: rgba(0,0,0,0.05);
@@ -85,7 +86,7 @@
       content: "flag string for regex expression";
     }
     .certainty:hover::after {
-      content: "boolean probability parameter";
+      content: "boolean probability parameter" !important;
     }
     .intersect:hover::after {
       content: "create a mesostic between words";
@@ -135,7 +136,7 @@
 <span class="token keyword let">let</span> <span class="token var">me</span> <span class="token be">be</span> <span class="token perhaps">perhaps</span> <span class="token string regex">"w?reckless"</span>;
 <span class="token and">and</span> <span class="token keyword let">let</span> <span class="token var">me</span> <span class="token be">be</span> <span class="token token string">"strong"</span>.
 
-<span class="token keyword let">let</span> <span class="token var">today</span> <span class="token be">be</span> <span class="token boolean">maybe</span> (<span class="token var certainty">certainty</span>: <span class="token number">0.8</span>);
+<span class="token keyword let">let</span> <span class="token var">today</span> <span class="token be">be</span> <span class="token boolean">maybe</span>(<span class="token var certainty">certainty</span>: <span class="token number">0.8</span>);
 <span class="token keyword">iffy</span> (<span class="token var">today</span>) {
   <span class="token var">I</span> (<span class="token string">"am"</span>);
   <span class="token string">"in"</span>;
