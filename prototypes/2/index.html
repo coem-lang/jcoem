@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>protopoem 1</title>
+  <title>proto-poegram 2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     *,
@@ -129,43 +129,40 @@
     .gentle:hover::after {
       content: "give verbose and forgiving messages in the console";
     }
+    .palimpsest:hover::after {
+      content: "allow variables to retain their history";
+    }
     .and:hover::after {
       content: "add on to string variables";
+    }
+
+    .var-with-history:hover::after {
+      content: "here\Aopen";
+      top: -150%;
     }
   </style>
 </head>
 <body>
-  <p id="code"><span class="directive"><span class="token using">#using</span> <span class="token daisychain">daisychain</span></span>
-<span class="directive"><span class="token using">#using</span> <span class="token passingoftime">passingoftime</span> = 1</span>
+  <p id="code"><span class="token using">#using</span> <span class="token palimpsest">palimpsest</span>
 
-<span class="directive"><span class="token directive-be">#be</span> <span class="token gentle">gentle</span></span>
+<span class="token let">let</span> <span class="token var regex">me<span class="operator">|</span>I</span>;
 
-<span class="token keyword let">let</span> <span class="token perhaps">perhaps</span> <span class="token var regex">me<span class="operator">|</span>I</span>;
-<span class="token keyword let">let</span> <span class="token var">me</span> <span class="token be">be</span> <span class="token perhaps">perhaps</span> <span class="token string regex">"w?reckless"</span>;
-<span class="token and">and</span> <span class="token keyword let">let</span> <span class="token var">me</span> <span class="token be">be</span> <span class="token token string">"strong"</span>.
+<span class="token var">I</span> <span class="token be">am</span> <span class="token string">"here"</span>;
+<span class="token var">I</span> <span class="token be">am</span> <span class="token string">"open"</span>;
+<span class="token var">I</span> <span class="token be">am</span> <span class="token string">"listening"</span>;
 
-<span class="token keyword let">let</span> <span class="token var">today</span> <span class="token be">be</span> <span class="token boolean">maybe</span>(<span class="token var certainty">certainty</span>: <span class="token number">0.8</span>);
-<span class="token keyword">iffy</span> (<span class="token var">today</span>) {
-  <span class="token string">"I am "</span> + <span class="token var">I</span>;
-  <span class="token string">"in"</span>;
-  <span class="token function intersect">intersect</span>(<span class="token string">"sorrow"</span>, <span class="token string">"hope"</span>);
-  & <span class="token function print">print</span>.
-} <span class="token keyword butfor">butfor</span> {
-  <span class="token string">"not today"</span>;
-  & <span class="token function print">print</span>.
-}</p>
+<span class="token function print">print(I)</span>;
+</p>
   <p id="poem"></p>
   <script>
     writePoem = () => {
       let p = document.getElementById("poem");
-      let poem = "";
-      poem += "I am " + ((Math.random() > 0.5) ? "wreckless" : "reckless") + " and strong";
-      poem += "\nin";
-      poem += ((Math.random() > 0.5) ? "\n  h\nsorrow\n  p\n  e" : "\n      h\nsorrow\n      p\n      e");
-      ((Math.random() < 0.8) ? p.innerText = poem : p.innerText = "not today");
+      let variable = document.createElement("span");
+      variable.classList.add("token", "var-with-history");
+      variable.innerText = "listening";
+      p.appendChild(variable);
     };
     writePoem();
-    setInterval(writePoem, 1000);
   </script>
 </body>
 </html>
