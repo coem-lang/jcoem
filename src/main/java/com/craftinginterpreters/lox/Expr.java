@@ -1,7 +1,5 @@
 package com.craftinginterpreters.lox;
 
-// import java.util.List;
-
 abstract class Expr {
   interface Visitor<R> {
     R visitAssignExpr(Assign expr);
@@ -22,11 +20,6 @@ abstract class Expr {
       return visitor.visitAssignExpr(this);
     }
 
-    @Override
-    public String toString() {
-      return this.name.toString() + " " + this.value.toString();
-    }
-
     final Token name;
     final Expr value;
   }
@@ -40,11 +33,6 @@ abstract class Expr {
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitBinaryExpr(this);
-    }
-
-    @Override
-    public String toString() {
-      return this.left.toString() + " " + this.operator.toString() + " " + this.right.toString();
     }
 
     final Expr left;
@@ -61,11 +49,6 @@ abstract class Expr {
       return visitor.visitGroupingExpr(this);
     }
 
-    @Override
-    public String toString() {
-      return this.expression.toString();
-    }
-
     final Expr expression;
   }
   static class Literal extends Expr {
@@ -76,11 +59,6 @@ abstract class Expr {
     @Override
     <R> R accept(Visitor<R> visitor) {
       return visitor.visitLiteralExpr(this);
-    }
-
-    @Override
-    public String toString() {
-      return this.value.toString();
     }
 
     final Object value;
@@ -96,10 +74,6 @@ abstract class Expr {
       return visitor.visitUnaryExpr(this);
     }
 
-    public String toString() {
-      return "not-" + this.right.toString();
-    }
-
     final Token operator;
     final Expr right;
   }
@@ -113,14 +87,8 @@ abstract class Expr {
       return visitor.visitVariableExpr(this);
     }
 
-    public String toString() {
-      return this.name.toString();
-    }
-
     final Token name;
   }
-
-  abstract public String toString();
 
   abstract <R> R accept(Visitor<R> visitor);
 }

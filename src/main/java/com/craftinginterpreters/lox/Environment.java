@@ -6,6 +6,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 class Environment {
+  final Environment enclosing;
+
+  Environment() {
+    enclosing = null;
+  }
+
+  Environment(Environment enclosing) {
+    this.enclosing = enclosing;
+  }
+
   // private final Map<String, Object> values = new HashMap<>();
   private final Map<Pattern, Object> values = new HashMap<>();
 
@@ -24,6 +34,10 @@ class Environment {
       return set.getValue();
     }
 
+    // if not found in this environment, try enclosing one
+    if (enclosing != null) return enclosing.get(name);
+
+    // if not found after recursively walking up the chain, throw error
     throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
   }
 
@@ -34,6 +48,13 @@ class Environment {
       return;
     }
 
+    // try enclosing env
+    if (enclosing != null) {
+      enclosing.assign(name, value);
+      return;
+    }
+
+    // throw after recursion
     throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
   }
 
