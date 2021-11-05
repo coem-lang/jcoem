@@ -1,16 +1,21 @@
 program { declaration* EOF }
 
-declaration { varDecl | statement }
+declaration { funDecl | varDecl | statement }
+
+funDecl { "to" function }
+function { IDENTIFIER "(" parameters? ")" block }
+parameters { IDENTIFIER ( "," IDENTIFIER )* }
 
 varDecl { "let" IDENTIFIER ( "be" expression )? ";" }
 
-statement { exprStmt | ifStmt | printStmt | block }
+statement { exprStmt | ifStmt | printStmt | returnStmt | block }
 
 block { "{" declaration* "}" }
 
 ifStmt { "if" "(" epxression ")" statement ( "else" statement )? }
 exprStmt { expression ";" }
 printStmt { "print" expression ";" }
+returnStmt { "return" expression? ";" }
 
 expression { assignment }
 assignment { "let" IDENTIFIER "be" assignment | logic_or }
@@ -20,5 +25,7 @@ equality { comparison ( ( "!==" | "is" | "am" | "are" ) comparison )* }
 comparison { term ( ( ">" | ">=" | "<" | "<=" ) term )* }
 term { factor ( ( "-" | "+" ) factor )* }
 factor { unary ( ( "/" | "*" ) unary )* }
-unary { ("-" | "!") unary | primary }
+unary { ("-" | "!") unary | call }
+call { primary ( "(" arguments? ")" )* }
+arguments { expression ( "," expression )* }
 primary { "true" | "false" | "nothing" | NUMBER | STRING | "(" expression ")" | IDENTIFIER }
