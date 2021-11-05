@@ -1,4 +1,4 @@
-# Poegram: The Language
+# Coem: The Language
 
 Based on Robert Nystrom's _Crafting Interpreters_.
 
