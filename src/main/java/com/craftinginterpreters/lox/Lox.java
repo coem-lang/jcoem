@@ -91,7 +91,7 @@ public class Lox {
 
     // INTERPRET THE EXPRESSION
     // interpreter.interpret(expression);
-    System.out.println("OUTPUT");
+    // System.out.println("OUTPUT");
     interpreter.interpret(statements);
   }
 

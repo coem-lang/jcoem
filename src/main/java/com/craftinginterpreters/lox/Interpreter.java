@@ -1,22 +1,36 @@
 package com.craftinginterpreters.lox;
 
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.function.BooleanSupplier;
 
 // class Interpreter implements Expr.Visitor<Object> {
 class Interpreter implements Expr.Visitor<Object>,
                              Stmt.Visitor<Void> {
 
-  private Environment environment = new Environment();
+  final Environment globals = new Environment();
+  private Environment environment = globals;
 
-  // // before statement
-  // void interpret(Expr expression) {
-  //   try {
-  //     Object value = evaluate(expression);
-  //     System.out.println(stringify(value));
-  //   } catch (RuntimeError error) {
-  //     Lox.runtimeError(error);
-  //   }
-  // }
+  Interpreter() {
+    // clock
+    globals.define("clock", new LoxCallable() {
+      @Override
+      public int arity() { return 0; }
+      
+      @Override
+      public Object call(Interpreter interpreter, List<Object> arguments) {
+        return (double)System.currentTimeMillis() / 1000.0;
+      }
+
+      @Override
+      public String toString() { return "<native fn>"; }
+    });
+    // maybe
+    BooleanSupplier maybe = () -> (new Random().nextDouble()) > 0.5;
+    globals.define("maybe", maybe);
+  }
+
   void interpret(List<Stmt> statements) {
     try {
       for (Stmt statement : statements) {
@@ -144,6 +158,13 @@ class Interpreter implements Expr.Visitor<Object>,
     return null;
   }
 
+  // @Override
+  // public Void visitFunctionStmt(Stmt.Function stmt) {
+  //   LoxFunction function = new LoxFunction(stmt, environment);
+  //   environment.define(stmt.name.lexeme, function);
+  //   return null;
+  // }
+
   @Override
   public Void visitIfStmt(Stmt.If stmt) {
     if (isTruthy(evaluate(stmt.condition))) {
@@ -157,9 +178,17 @@ class Interpreter implements Expr.Visitor<Object>,
   @Override
   public Void visitPrintStmt(Stmt.Print stmt) {
     Object value = evaluate(stmt.expression);
-    System.out.println(stmt.expression.toString() + " " + stringify(value));
-    // System.out.println(stringify(value));
+    // System.out.println(stmt.expression.toString() + " " + stringify(value));
+    System.out.println(stringify(value));
     return null;
+  }
+
+  @Override
+  public Void visitReturnStmt(Stmt.Return stmt) {
+    Object value = null;
+    if (stmt.value != null) value = evaluate(stmt.value);
+
+    throw new Return(value);
   }
 
   @Override
@@ -177,7 +206,7 @@ class Interpreter implements Expr.Visitor<Object>,
   public Object visitAssignExpr(Expr.Assign expr) {
     Object value = evaluate(expr.value);
     environment.assign(expr.name, value);
-    System.out.println("assign " + expr.name.toString() + " " + expr.value.toString());
+    // System.out.println("assign " + expr.name.toString() + " " + expr.value.toString());
     return value;
   }
 
@@ -227,5 +256,26 @@ class Interpreter implements Expr.Visitor<Object>,
 
     // Unreachable.
     return null;
+  }
+
+  @Override
+  public Object visitCallExpr(Expr.Call expr) {
+    Object callee = evaluate(expr.callee);
+
+    List<Object> arguments = new ArrayList<>();
+    for (Expr argument : expr.arguments) {
+      arguments.add(evaluate(argument));
+    }
+
+    if (!(callee instanceof LoxCallable)) {
+      throw new RuntimeError(expr.paren, "Can only call functions and classes.");
+    }
+
+    LoxCallable function = (LoxCallable)callee;
+    if (arguments.size() != function.arity()) {
+      throw new RuntimeError(expr.paren, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+    }
+
+    return function.call(this, arguments);
   }
 }

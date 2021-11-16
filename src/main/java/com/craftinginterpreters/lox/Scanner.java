@@ -24,9 +24,8 @@ class Scanner {
     keywords.put("else",   ELSE);
     keywords.put("false",  FALSE);
     keywords.put("for",    FOR);
-    keywords.put("fun",    FUN);
+    keywords.put("to",     TO);
     keywords.put("if",     IF);
-    // keywords.put("nil",    NIL);
     keywords.put("nothing", NOTHING);
     keywords.put("or",     OR);
     keywords.put("print",  PRINT);
@@ -34,13 +33,13 @@ class Scanner {
     keywords.put("super",  SUPER);
     keywords.put("this",   THIS);
     keywords.put("true",   TRUE);
-    // keywords.put("var",    VAR);
     keywords.put("let", LET);
     keywords.put("while",  WHILE);
     keywords.put("be", BE);
     keywords.put("is", IS);
     keywords.put("am", AM);
     keywords.put("are", ARE);
+    // keywords.put("maybe", MAYBE);
   }
 
   Scanner(String source) {
@@ -107,20 +106,25 @@ class Scanner {
       default:
         if (isDigit(c)) {
           number();
-        } else {
-        // if (isAlpha(c)) {
+        // normal
+        } else if (isAlpha(c)) {
           identifier();
+        } else {
+          Lox.error(line, "Unexpected character.");
         }
-        // else {
-        //   Lox.error(line, "Unexpected character.");
+        // regex
+        // } else {
+        //   identifier();
         // }
         break;
     }
   }
 
   private void identifier() {
-    // while (isAlphaNumeric(peek())) advance();
-    while (isNotBoundary(peek())) advance();
+    // normal
+    while (isAlphaNumeric(peek())) advance();
+    // regex
+    // while (isNotBoundary(peek())) advance();
 
     String text = source.substring(start, current);
     TokenType type = keywords.get(text);
@@ -180,15 +184,15 @@ class Scanner {
     return source.charAt(current + 1);
   }
 
-  // private boolean isAlpha(char c) {
-  //   return (c >= 'a' && c <= 'z') ||
-  //          (c >= 'A' && c <= 'Z') ||
-  //           c == '_';
-  // }
+  private boolean isAlpha(char c) {
+    return (c >= 'a' && c <= 'z') ||
+           (c >= 'A' && c <= 'Z') ||
+            c == '_';
+  }
 
-  // private boolean isAlphaNumeric(char c) {
-  //   return isAlpha(c) || isDigit(c);
-  // }
+  private boolean isAlphaNumeric(char c) {
+    return isAlpha(c) || isDigit(c);
+  }
 
   private boolean isNotBoundary(char c) {
     return (!isSpace(c) && !isSemicolon(c));

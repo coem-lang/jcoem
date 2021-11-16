@@ -17,11 +17,14 @@ enum TokenType {
   IDENTIFIER, STRING, NUMBER,
 
   // Keywords.
-  AND, CLASS, ELSE, FALSE, FUN, FOR, IF, NOTHING, OR,
-  PRINT, RETURN, SUPER, THIS, TRUE, VAR, WHILE,
-
-  LET, BE, PERHAPS,
-  IS, AM, ARE,
+  AND, OR, // logic
+  IS, AM, ARE, // comparison
+  IF, ELSE, FOR, WHILE, // control flow
+  LET, BE, // variables
+  TO, RETURN, PRINT, // functions
+  CLASS, SUPER, THIS, // classes
+  TRUE, FALSE, NOTHING, // values
+  // MAYBE,
 
   EOF
 }

@@ -2,8 +2,10 @@ package com.craftinginterpreters.lox;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.function.BooleanSupplier;
 
 class Environment {
   final Environment enclosing;
@@ -31,6 +33,11 @@ class Environment {
     // }
     Map.Entry<Pattern, Object> set = getSet(name.lexeme);
     if (set != null) {
+      Object value = set.getValue();
+      if (value instanceof BooleanSupplier) {
+        BooleanSupplier bs = (BooleanSupplier)value;
+        return bs.getAsBoolean();
+      }
       return set.getValue();
     }
 
