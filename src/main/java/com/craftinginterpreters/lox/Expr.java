@@ -56,7 +56,7 @@ abstract class Expr {
     }
 
     final Expr callee;
-    final Token paren;
+    final Token dash;
     final List<Expr> arguments;
   }
   static class Grouping extends Expr {
