@@ -158,12 +158,12 @@ class Interpreter implements Expr.Visitor<Object>,
     return null;
   }
 
-  // @Override
-  // public Void visitFunctionStmt(Stmt.Function stmt) {
-  //   LoxFunction function = new LoxFunction(stmt, environment);
-  //   environment.define(stmt.name.lexeme, function);
-  //   return null;
-  // }
+  @Override
+  public Void visitFunctionStmt(Stmt.Function stmt) {
+    LoxFunction function = new LoxFunction(stmt, environment);
+    environment.define(stmt.name.lexeme, function);
+    return null;
+  }
 
   @Override
   public Void visitIfStmt(Stmt.If stmt) {
@@ -268,12 +268,12 @@ class Interpreter implements Expr.Visitor<Object>,
     }
 
     if (!(callee instanceof LoxCallable)) {
-      throw new RuntimeError(expr.paren, "Can only call functions and classes.");
+      throw new RuntimeError(expr.dash, "Can only call functions and classes.");
     }
 
     LoxCallable function = (LoxCallable)callee;
     if (arguments.size() != function.arity()) {
-      throw new RuntimeError(expr.paren, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+      throw new RuntimeError(expr.dash, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
     }
 
     return function.call(this, arguments);

@@ -44,9 +44,9 @@ abstract class Expr {
     final Expr right;
   }
   static class Call extends Expr {
-    Call(Expr callee, Token paren, List<Expr> arguments) {
+    Call(Expr callee, Token dash, List<Expr> arguments) {
       this.callee = callee;
-      this.paren = paren;
+      this.dash = dash;
       this.arguments = arguments;
     }
 

@@ -41,7 +41,7 @@ class Parser {
 
   private Stmt declaration() {
     try {
-      // if (match(TO)) return function("function");
+      if (match(TO)) return function("function");
       if (match(LET)) return varDeclaration();
       return statement();
     } catch (ParseError error) {
@@ -108,25 +108,25 @@ class Parser {
     return new Stmt.Expression(expr);
   }
 
-  // private Stmt.Function function(String kind) {
-  //   Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
-  //   consume(LEFT_PAREN, "Expect '(' after " + kind + " name.");
-  //   List<Token> parameters = new ArrayList<>();
-  //   if (!check(RIGHT_PAREN)) {
-  //     do {
-  //       if (parameters.size() >= 255) {
-  //         error(peek(), "Can't have more than 255 parameters.");
-  //       }
+  private Stmt.Function function(String kind) {
+    Token name = consume(IDENTIFIER, "Expect " + kind + " name.");
+    consume(EM_DASH, "Expect '—' after " + kind + " name.");
+    List<Token> parameters = new ArrayList<>();
+    if (!check(EM_DASH)) {
+      do {
+        if (parameters.size() >= 255) {
+          error(peek(), "Can't have more than 255 parameters.");
+        }
 
-  //       parameters.add(consume(IDENTIFIER, "Expect identifier name."));
-  //     } while (match(COMMA));
-  //   }
-  //   consume(RIGHT_PAREN, "Expect ')' after parameters.");
+        parameters.add(consume(IDENTIFIER, "Expect identifier name."));
+      } while (match(COMMA));
+    }
+    consume(EM_DASH, "Expect '—' after parameters.");
 
-  //   consume(LEFT_BRACE, "Expect '{' before " + kind + " name.");
-  //   List<Stmt> body = block();
-  //   return new Stmt.Function(name, parameters, body);
-  // }
+    consume(LEFT_BRACE, "Expect '{' before " + kind + " name.");
+    List<Stmt> body = block();
+    return new Stmt.Function(name, parameters, body);
+  }
 
   private List<Stmt> block() {
     List<Stmt> statements = new ArrayList<>();
@@ -244,7 +244,7 @@ class Parser {
   private Expr finishCall(Expr callee) {
     List<Expr> arguments = new ArrayList<>();
 
-    if (!check(RIGHT_PAREN)) {
+    if (!check(EM_DASH)) {
       do {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
@@ -253,16 +253,16 @@ class Parser {
       } while (match(COMMA));
     }
 
-    Token paren = consume(RIGHT_PAREN, "Expect ')' after arguments.");
+    Token dash = consume(EM_DASH, "Expect ')' after arguments.");
 
-    return new Expr.Call(callee, paren, arguments);
+    return new Expr.Call(callee, dash, arguments);
   }
 
   private Expr call() {
     Expr expr = primary();
 
     while (true) {
-      if (match(LEFT_PAREN)) {
+      if (match(EM_DASH)) {
         expr = finishCall(expr);
       } else {
         break;
