@@ -33,6 +33,7 @@ enum TokenType {
   CLASS, SUPER, THIS, // classes
   TRUE, FALSE, NOTHING, // values
   // MAYBE,
+  NOT,
 
   EOF
 }

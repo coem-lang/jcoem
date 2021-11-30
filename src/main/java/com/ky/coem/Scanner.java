@@ -41,6 +41,7 @@ class Scanner {
     keywords.put("am", AM);
     keywords.put("are", ARE);
     // keywords.put("maybe", MAYBE);
+    keywords.put("not", NOT);
   }
 
   Scanner(String source) {
