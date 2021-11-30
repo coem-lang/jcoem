@@ -1,8 +1,8 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.util.List;
 
-interface LoxCallable {
+interface CoemCallable {
   int arity();
   Object call(Interpreter interpreter, List<Object> arguments);
 }

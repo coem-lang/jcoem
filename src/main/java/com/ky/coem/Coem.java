@@ -1,4 +1,4 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,10 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-// import com.craftinginterpreters.lox.Token;
-// import com.craftinginterpreters.lox.Scanner;
+// import com.ky.coem.Token;
+// import com.ky.coem.Scanner;
 
-public class Lox {
+public class Coem {
 
   private static final Interpreter interpreter = new Interpreter();
   static boolean hadError = false;
@@ -19,7 +19,7 @@ public class Lox {
 
   public static void main(String[] args) throws IOException {
     if (args.length > 1) {
-      System.out.println("Usage: jlox [script]");
+      System.out.println("Usage: jcoem [script]");
       System.exit(64); 
     } else if (args.length == 1) {
       runFile(args[0]);

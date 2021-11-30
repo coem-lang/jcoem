@@ -1,12 +1,12 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.util.List;
 
-class LoxFunction implements LoxCallable {
+class coemFunction implements CoemCallable {
   private final Stmt.Function declaration;
   private final Environment closure;
 
-  LoxFunction(Stmt.Function declaration, Environment closure) {
+  coemFunction(Stmt.Function declaration, Environment closure) {
     this.closure = closure;
     this.declaration = declaration;
   }

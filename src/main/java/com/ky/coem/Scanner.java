@@ -1,11 +1,11 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.craftinginterpreters.lox.TokenType.*; 
+import static com.ky.coem.TokenType.*; 
 
 class Scanner {
   private final String source;
@@ -112,7 +112,7 @@ class Scanner {
         // } else if (isAlpha(c)) {
         //   identifier();
         // } else {
-        //   Lox.error(line, "Unexpected character.");
+        //   coem.error(line, "Unexpected character.");
         // }
         // regex
         } else {
@@ -156,7 +156,7 @@ class Scanner {
     }
 
     if (isAtEnd()) {
-      Lox.error(line, "Unterminated string.");
+      Coem.error(line, "Unterminated string.");
       return;
     }
 

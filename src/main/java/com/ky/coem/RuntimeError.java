@@ -1,4 +1,4 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 class RuntimeError extends RuntimeException {
   final Token token;

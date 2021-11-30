@@ -1,10 +1,10 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.util.List;
 
 import java.util.ArrayList;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static com.ky.coem.TokenType.*;
 
 class Parser {
   private static class ParseError extends RuntimeException {}
@@ -345,7 +345,7 @@ class Parser {
   }
 
   private ParseError error(Token token, String message) {
-    Lox.error(token, message);
+    Coem.error(token, message);
     return new ParseError();
   }
 

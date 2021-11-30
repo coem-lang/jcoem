@@ -1,4 +1,4 @@
-package com.craftinginterpreters.lox;
+package com.ky.coem;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ class Interpreter implements Expr.Visitor<Object>,
 
   Interpreter() {
     // clock
-    globals.define("clock", new LoxCallable() {
+    globals.define("clock", new CoemCallable() {
       @Override
       public int arity() { return 0; }
       
@@ -37,7 +37,7 @@ class Interpreter implements Expr.Visitor<Object>,
         execute(statement);
       }
     } catch (RuntimeError error) {
-      Lox.runtimeError(error);
+      Coem.runtimeError(error);
     }
   }
 
@@ -160,7 +160,7 @@ class Interpreter implements Expr.Visitor<Object>,
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    LoxFunction function = new LoxFunction(stmt, environment);
+    coemFunction function = new coemFunction(stmt, environment);
     environment.define(stmt.name.lexeme, function);
     return null;
   }
@@ -267,11 +267,11 @@ class Interpreter implements Expr.Visitor<Object>,
       arguments.add(evaluate(argument));
     }
 
-    if (!(callee instanceof LoxCallable)) {
+    if (!(callee instanceof CoemCallable)) {
       throw new RuntimeError(expr.dash, "Can only call functions and classes.");
     }
 
-    LoxCallable function = (LoxCallable)callee;
+    CoemCallable function = (CoemCallable)callee;
     if (arguments.size() != function.arity()) {
       throw new RuntimeError(expr.dash, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
     }
