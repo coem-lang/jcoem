@@ -27,7 +27,8 @@ enum TokenType {
   IS, AM, ARE, // comparison
   IF, ELSE, FOR, WHILE, // control flow
   LET, BE, // variables
-  TO, PRINT, // functions
+  TO, 
+  PRINT, KNOW,
   // RETURN,
   CLASS, SUPER, THIS, // classes
   TRUE, FALSE, NOTHING, // values

@@ -29,6 +29,7 @@ class Scanner {
     keywords.put("nothing", NOTHING);
     keywords.put("or",     OR);
     keywords.put("print",  PRINT);
+    keywords.put("know",  KNOW);
     // keywords.put("return", RETURN);
     keywords.put("super",  SUPER);
     keywords.put("this",   THIS);
