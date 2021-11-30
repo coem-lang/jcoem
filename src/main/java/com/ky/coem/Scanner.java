@@ -29,7 +29,7 @@ class Scanner {
     keywords.put("nothing", NOTHING);
     keywords.put("or",     OR);
     keywords.put("print",  PRINT);
-    keywords.put("return", RETURN);
+    // keywords.put("return", RETURN);
     keywords.put("super",  SUPER);
     keywords.put("this",   THIS);
     keywords.put("true",   TRUE);
@@ -70,7 +70,8 @@ class Scanner {
       case '-': addToken(MINUS); break;
       case '+': addToken(PLUS); break;
       case ';': addToken(SEMICOLON); break;
-      case '*': addToken(STAR); break; 
+      case '*': addToken(STAR); break;
+      case '&': addToken(AMPERSAND); break; 
       case '!':
         addToken(match('=') ? BANG_EQUAL : BANG);
         break;

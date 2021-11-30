@@ -11,6 +11,7 @@ enum TokenType {
   EM_DASH,
   SEMICOLON,
   // NEWLINE,
+  AMPERSAND,
 
   // One or two character tokens.
   BANG, BANG_EQUAL,
@@ -26,7 +27,8 @@ enum TokenType {
   IS, AM, ARE, // comparison
   IF, ELSE, FOR, WHILE, // control flow
   LET, BE, // variables
-  TO, RETURN, PRINT, // functions
+  TO, PRINT, // functions
+  // RETURN,
   CLASS, SUPER, THIS, // classes
   TRUE, FALSE, NOTHING, // values
   // MAYBE,

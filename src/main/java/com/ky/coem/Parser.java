@@ -53,7 +53,8 @@ class Parser {
   private Stmt statement() {
     if (match(IF)) return ifStatement();
     if (match(PRINT)) return printStatement();
-    if (match(RETURN)) return returnStatement();
+    // if (match(RETURN)) return returnStatement();
+    if (match(AMPERSAND)) return returnStatement();
     // if (match(LEFT_BRACE)) return new Stmt.Block(block());
     if (match(COLON)) return new Stmt.Block(block());
 
@@ -364,7 +365,8 @@ class Parser {
         case IF:
         case WHILE:
         case PRINT:
-        case RETURN:
+        // case RETURN:
+        case AMPERSAND:
           return;
         default:
       }
