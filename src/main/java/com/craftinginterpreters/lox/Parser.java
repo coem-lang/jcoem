@@ -54,17 +54,18 @@ class Parser {
     if (match(IF)) return ifStatement();
     if (match(PRINT)) return printStatement();
     if (match(RETURN)) return returnStatement();
-    if (match(LEFT_BRACE)) return new Stmt.Block(block());
+    // if (match(LEFT_BRACE)) return new Stmt.Block(block());
+    if (match(COLON)) return new Stmt.Block(block());
 
     return expressionStatement();
   }
 
   private Stmt ifStatement() {
     // consume(LEFT_PAREN, "Expect '(' after 'if'.");
-    consume(EM_DASH, "Expect '(' after 'if'.");
+    consume(EM_DASH, "Expect '—' after 'if'.");
     Expr condition = expression();
     // consume(RIGHT_PAREN, "Expect ')' after if condition.");
-    consume(EM_DASH, "Expect ')' after if condition.");
+    consume(EM_DASH, "Expect '—' after if condition.");
 
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
@@ -78,6 +79,7 @@ class Parser {
   private Stmt printStatement() {
     Expr value = expression();
     consume(SEMICOLON, "Expect ';' after value.");
+    // consume(NEWLINE, "Expect newline after value.");
     return new Stmt.Print(value);
   }
 
@@ -85,10 +87,12 @@ class Parser {
     Token keyword = previous();
     Expr value = null;
     if (!check(SEMICOLON)) {
+    // if (!check(NEWLINE)) {
       value = expression();
     }
     
     consume(SEMICOLON, "Expect ';' after return value.");
+    // consume(NEWLINE, "Expect newline after return value.");
     return new Stmt.Return(keyword, value);
   }
 
@@ -101,12 +105,14 @@ class Parser {
     }
 
     consume(SEMICOLON, "Expect ';' after variable declaration.");
+    // consume(NEWLINE, "Expect newline after variable declaration.");
     return new Stmt.Var(name, initializer);
   }
 
   private Stmt expressionStatement() {
     Expr expr = expression();
     consume(SEMICOLON, "Expect ';' after value.");
+    // consume(NEWLINE, "Expect newline after value.");
     return new Stmt.Expression(expr);
   }
 
@@ -125,7 +131,8 @@ class Parser {
     }
     consume(EM_DASH, "Expect '—' after parameters.");
 
-    consume(LEFT_BRACE, "Expect '{' before " + kind + " name.");
+    // consume(LEFT_BRACE, "Expect '{' before " + kind + " name.");
+    consume(COLON, "Expect ':' before " + kind + " name.");
     List<Stmt> body = block();
     return new Stmt.Function(name, parameters, body);
   }
@@ -133,11 +140,13 @@ class Parser {
   private List<Stmt> block() {
     List<Stmt> statements = new ArrayList<>();
 
-    while (!check(RIGHT_BRACE) && !isAtEnd()) {
+    // while (!check(RIGHT_BRACE) && !isAtEnd()) {
+    while (!check(DOT) && !isAtEnd()) {
       statements.add(declaration());
     }
 
-    consume(RIGHT_BRACE, "Expect '}' after block.");
+    // consume(RIGHT_BRACE, "Expect '}' after block.");
+    consume(DOT, "Expect '.' after block.");
     return statements;
   }
 
@@ -345,6 +354,7 @@ class Parser {
 
     while (!isAtEnd()) {
       if (previous().type == SEMICOLON) return;
+      // if (previous().type == NEWLINE) return;
 
       switch (peek().type) {
         case CLASS:

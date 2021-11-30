@@ -52,7 +52,6 @@ class Scanner {
       start = current;
       scanToken();
     }
-
     tokens.add(new Token(EOF, "", null, line));
     return tokens;
   }
@@ -63,8 +62,9 @@ class Scanner {
       // case '(': addToken(LEFT_PAREN); break;
       // case ')': addToken(RIGHT_PAREN); break;
       case '—': addToken(EM_DASH); break;
-      case '{': addToken(LEFT_BRACE); break;
-      case '}': addToken(RIGHT_BRACE); break;
+      // case '{': addToken(LEFT_BRACE); break;
+      // case '}': addToken(RIGHT_BRACE); break;
+      case ':': addToken(COLON); break;
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;
       case '-': addToken(MINUS); break;
@@ -99,6 +99,7 @@ class Scanner {
         break;
 
       case '\n':
+        // addToken(NEWLINE);
         line++;
         break;
 
@@ -196,7 +197,8 @@ class Scanner {
   }
 
   private boolean isNotBoundary(char c) {
-    return (!isSpace(c) && !isSemicolon(c));
+    return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
+    // return (!isSpace(c) && !isNewline(c) && !isEmdash(c));
   }
 
   private boolean isSpace(char c) {
@@ -205,6 +207,17 @@ class Scanner {
 
   private boolean isSemicolon(char c) {
     return c == ';';
+  }
+
+  // private boolean isNewline(char c) {
+  //   System.out.print(c);
+  //   System.out.print(' ');
+  //   System.out.println(c == '\n');
+  //   return c == '\n';
+  // }
+
+  private boolean isEmdash(char c) {
+    return c == '—';
   }
 
   private boolean isDigit(char c) {
@@ -220,10 +233,12 @@ class Scanner {
   }
 
   private void addToken(TokenType type) {
+    // System.out.println(type);
     addToken(type, null);
   }
 
   private void addToken(TokenType type, Object literal) {
+    // System.out.println(literal);
     String text = source.substring(start, current);
     tokens.add(new Token(type, text, literal, line));
   }
