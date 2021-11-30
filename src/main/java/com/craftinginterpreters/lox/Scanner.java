@@ -60,8 +60,8 @@ class Scanner {
   private void scanToken() {
     char c = advance();
     switch (c) {
-      case '(': addToken(LEFT_PAREN); break;
-      case ')': addToken(RIGHT_PAREN); break;
+      // case '(': addToken(LEFT_PAREN); break;
+      // case ')': addToken(RIGHT_PAREN); break;
       case '—': addToken(EM_DASH); break;
       case '{': addToken(LEFT_BRACE); break;
       case '}': addToken(RIGHT_BRACE); break;
@@ -107,25 +107,25 @@ class Scanner {
       default:
         if (isDigit(c)) {
           number();
-        // normal
-        } else if (isAlpha(c)) {
-          identifier();
-        } else {
-          Lox.error(line, "Unexpected character.");
-        }
-        // regex
-        // } else {
+        // // normal
+        // } else if (isAlpha(c)) {
         //   identifier();
+        // } else {
+        //   Lox.error(line, "Unexpected character.");
         // }
+        // regex
+        } else {
+          identifier();
+        }
         break;
     }
   }
 
   private void identifier() {
     // normal
-    while (isAlphaNumeric(peek())) advance();
+    // while (isAlphaNumeric(peek())) advance();
     // regex
-    // while (isNotBoundary(peek())) advance();
+    while (isNotBoundary(peek())) advance();
 
     String text = source.substring(start, current);
     TokenType type = keywords.get(text);

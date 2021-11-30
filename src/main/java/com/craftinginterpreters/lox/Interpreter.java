@@ -119,10 +119,10 @@ class Interpreter implements Expr.Visitor<Object>,
     return object.toString();
   }
 
-  @Override
-  public Object visitGroupingExpr(Expr.Grouping expr) {
-    return evaluate(expr.expression);
-  }
+  // @Override
+  // public Object visitGroupingExpr(Expr.Grouping expr) {
+  //   return evaluate(expr.expression);
+  // }
 
   private Object evaluate(Expr expr) {
     return expr.accept(this);

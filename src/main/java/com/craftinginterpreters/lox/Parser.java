@@ -60,9 +60,11 @@ class Parser {
   }
 
   private Stmt ifStatement() {
-    consume(LEFT_PAREN, "Expect '(' after 'if'.");
+    // consume(LEFT_PAREN, "Expect '(' after 'if'.");
+    consume(EM_DASH, "Expect '(' after 'if'.");
     Expr condition = expression();
-    consume(RIGHT_PAREN, "Expect ')' after if condition.");
+    // consume(RIGHT_PAREN, "Expect ')' after if condition.");
+    consume(EM_DASH, "Expect ')' after if condition.");
 
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
@@ -285,11 +287,11 @@ class Parser {
       return new Expr.Variable(previous());
     }
 
-    if (match(LEFT_PAREN)) {
-      Expr expr = expression();
-      consume(RIGHT_PAREN, "Expect ')' after expression.");
-      return new Expr.Grouping(expr);
-    }
+    // if (match(LEFT_PAREN)) {
+    //   Expr expr = expression();
+    //   consume(RIGHT_PAREN, "Expect ')' after expression.");
+    //   return new Expr.Grouping(expr);
+    // }
 
     throw error(peek(), "Expect expression.");
   }
