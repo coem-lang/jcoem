@@ -189,15 +189,15 @@ class Scanner {
     return source.charAt(current + 1);
   }
 
-  private boolean isAlpha(char c) {
-    return (c >= 'a' && c <= 'z') ||
-           (c >= 'A' && c <= 'Z') ||
-            c == '_';
-  }
+  // private boolean isAlpha(char c) {
+  //   return (c >= 'a' && c <= 'z') ||
+  //          (c >= 'A' && c <= 'Z') ||
+  //           c == '_';
+  // }
 
-  private boolean isAlphaNumeric(char c) {
-    return isAlpha(c) || isDigit(c);
-  }
+  // private boolean isAlphaNumeric(char c) {
+  //   return isAlpha(c) || isDigit(c);
+  // }
 
   private boolean isNotBoundary(char c) {
     return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
