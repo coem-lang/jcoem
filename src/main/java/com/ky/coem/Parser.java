@@ -16,14 +16,6 @@ class Parser {
     this.tokens = tokens;
   }
 
-  // // before implementing Stmt
-  // Expr parse() {
-  //   try {
-  //     return expression();
-  //   } catch (ParseError erro) {
-  //     return null;
-  //   }
-  // }
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
@@ -53,9 +45,9 @@ class Parser {
   private Stmt statement() {
     if (match(IF)) return ifStatement();
     if (match(PRINT, KNOW)) return printStatement();
+    if (match(AMPERSAND)) return returnStatement();
     if (match(WHILE)) return whileStatement();
     // if (match(RETURN)) return returnStatement();
-    if (match(AMPERSAND)) return returnStatement();
     // if (match(LEFT_BRACE)) return new Stmt.Block(block());
     if (match(COLON)) return new Stmt.Block(block());
 
@@ -208,7 +200,8 @@ class Parser {
   private Expr equality() {
     Expr expr = comparison();
 
-    while (match(BANG_EQUAL, EQUAL_EQUAL, IS, AM, ARE)) {
+    // while (match(BANG_EQUAL, EQUAL_EQUAL, IS, AM, ARE)) {
+    while (match(IS, AM, ARE)) {
       Token operator = previous();
       Expr right = comparison();
       expr = new Expr.Binary(expr, operator, right);
@@ -220,11 +213,11 @@ class Parser {
   private Expr comparison() {
     Expr expr = term();
 
-    while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
-      Token operator = previous();
-      Expr right = term();
-      expr = new Expr.Binary(expr, operator, right);
-    }
+    // while (match(GREATER, GREATER_EQUAL, LESS, LESS_EQUAL)) {
+    //   Token operator = previous();
+    //   Expr right = term();
+    //   expr = new Expr.Binary(expr, operator, right);
+    // }
 
     return expr;
   }
@@ -232,7 +225,8 @@ class Parser {
   private Expr term() {
     Expr expr = factor();
 
-    while (match(MINUS, PLUS)) {
+    // while (match(MINUS, PLUS)) {
+    while (match(PLUS)) {
       Token operator = previous();
       Expr right = factor();
       expr = new Expr.Binary(expr, operator, right);
@@ -244,17 +238,18 @@ class Parser {
   private Expr factor() {
     Expr expr = unary();
 
-    while (match(SLASH, STAR)) {
-      Token operator = previous();
-      Expr right = unary();
-      expr = new Expr.Binary(expr, operator, right);
-    }
+    // while (match(SLASH, STAR)) {
+    //   Token operator = previous();
+    //   Expr right = unary();
+    //   expr = new Expr.Binary(expr, operator, right);
+    // }
 
     return expr;
   }
 
   private Expr unary() {
-    if (match(BANG, MINUS, NOT)) {
+    // if (match(BANG, MINUS, NOT)) {
+    if (match(NOT)) {
       Token operator = previous();
       Expr right = unary();
       return new Expr.Unary(operator, right);
@@ -368,7 +363,7 @@ class Parser {
       // if (previous().type == NEWLINE) return;
 
       switch (peek().type) {
-        case CLASS:
+        // case CLASS:
         case TO:
         case LET:
         case FOR:

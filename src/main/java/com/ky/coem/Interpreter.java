@@ -26,6 +26,7 @@ class Interpreter implements Expr.Visitor<Object>,
       @Override
       public String toString() { return "<native fn>"; }
     });
+
     // maybe
     BooleanSupplier maybe = () -> (new Random().nextDouble()) > 0.5;
     globals.define("maybe", maybe);
@@ -64,10 +65,11 @@ class Interpreter implements Expr.Visitor<Object>,
     Object right = evaluate(expr.right);
 
     switch (expr.operator.type) {
-      case BANG:
+      // case BANG:
+      case NOT:
         return !isTruthy(right);
-      case MINUS:
-        return -(double)right;
+      // case MINUS:
+      //   return -(double)right;
       default:
     }
 
@@ -80,17 +82,17 @@ class Interpreter implements Expr.Visitor<Object>,
     return environment.get(expr.name);
   }
 
-  private void checkNumberOperand(Token operator, Object operand) {
-    if (operand instanceof Double) return;
-    throw new RuntimeError(operator, "Operand must be a number.");
-  }
+  // private void checkNumberOperand(Token operator, Object operand) {
+  //   if (operand instanceof Double) return;
+  //   throw new RuntimeError(operator, "Operand must be a number.");
+  // }
 
-  private void checkNumberOperands(Token operator,
-                                   Object left, Object right) {
-    if (left instanceof Double && right instanceof Double) return;
+  // private void checkNumberOperands(Token operator,
+  //                                  Object left, Object right) {
+  //   if (left instanceof Double && right instanceof Double) return;
     
-    throw new RuntimeError(operator, "Operands must be numbers.");
-  }
+  //   throw new RuntimeError(operator, "Operands must be numbers.");
+  // }
 
   private boolean isTruthy(Object object) {
     if (object == null) return false;
@@ -160,7 +162,7 @@ class Interpreter implements Expr.Visitor<Object>,
 
   @Override
   public Void visitFunctionStmt(Stmt.Function stmt) {
-    coemFunction function = new coemFunction(stmt, environment);
+    CoemFunction function = new CoemFunction(stmt, environment);
     environment.define(stmt.name.lexeme, function);
     return null;
   }
@@ -224,21 +226,21 @@ class Interpreter implements Expr.Visitor<Object>,
     Object right = evaluate(expr.right); 
 
     switch (expr.operator.type) {
-      case GREATER:
-        checkNumberOperands(expr.operator, left, right);
-        return (double)left > (double)right;
-      case GREATER_EQUAL:
-        checkNumberOperands(expr.operator, left, right);
-        return (double)left >= (double)right;
-      case LESS:
-        checkNumberOperands(expr.operator, left, right);
-        return (double)left < (double)right;
-      case LESS_EQUAL:
-        checkNumberOperands(expr.operator, left, right);
-        return (double)left <= (double)right;
-      case MINUS:
-      checkNumberOperand(expr.operator, right);
-        return (double)left - (double)right;
+      // case GREATER:
+      //   checkNumberOperands(expr.operator, left, right);
+      //   return (double)left > (double)right;
+      // case GREATER_EQUAL:
+      //   checkNumberOperands(expr.operator, left, right);
+      //   return (double)left >= (double)right;
+      // case LESS:
+      //   checkNumberOperands(expr.operator, left, right);
+      //   return (double)left < (double)right;
+      // case LESS_EQUAL:
+      //   checkNumberOperands(expr.operator, left, right);
+      //   return (double)left <= (double)right;
+      // case MINUS:
+      // checkNumberOperand(expr.operator, right);
+      //   return (double)left - (double)right;
       case PLUS:
         if (left instanceof Double && right instanceof Double) {
           return (double)left + (double)right;
@@ -250,15 +252,15 @@ class Interpreter implements Expr.Visitor<Object>,
 
         throw new RuntimeError(expr.operator,
             "Operands must be two numbers or two strings.");
-      case SLASH:
-        return (double)left / (double)right;
-      case STAR:
-        return (double)left * (double)right;
-      case BANG_EQUAL: return !isEqual(left, right);
+      // case SLASH:
+      //   return (double)left / (double)right;
+      // case STAR:
+      //   return (double)left * (double)right;
+      // case BANG_EQUAL: return !isEqual(left, right);
       case IS:
       case AM:
       case ARE:
-      case EQUAL_EQUAL: return isEqual(left, right);
+        return isEqual(left, right);
       default:
     }
 

@@ -7,17 +7,19 @@ enum TokenType {
   // LEFT_PAREN, RIGHT_PAREN,
   // LEFT_BRACE, RIGHT_BRACE,
   COLON,
-  COMMA, DOT, MINUS, PLUS, SLASH, STAR,
+  COMMA, DOT, PLUS,
+  // MINUS,
+  // SLASH,
   EM_DASH,
   SEMICOLON,
   // NEWLINE,
   AMPERSAND,
 
   // One or two character tokens.
-  BANG, BANG_EQUAL,
-  EQUAL, EQUAL_EQUAL,
-  GREATER, GREATER_EQUAL,
-  LESS, LESS_EQUAL,
+  // BANG, BANG_EQUAL,
+  // EQUAL, EQUAL_EQUAL,
+  // GREATER, GREATER_EQUAL,
+  // LESS, LESS_EQUAL,
 
   // Literals.
   IDENTIFIER, STRING, NUMBER,
@@ -30,7 +32,7 @@ enum TokenType {
   TO, 
   PRINT, KNOW,
   // RETURN,
-  CLASS, SUPER, THIS, // classes
+  // CLASS, SUPER, THIS, // classes
   TRUE, FALSE, NOTHING, // values
   // MAYBE,
   NOT,
