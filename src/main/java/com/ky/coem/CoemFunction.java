@@ -2,11 +2,11 @@ package com.ky.coem;
 
 import java.util.List;
 
-class coemFunction implements CoemCallable {
+class CoemFunction implements CoemCallable {
   private final Stmt.Function declaration;
   private final Environment closure;
 
-  coemFunction(Stmt.Function declaration, Environment closure) {
+  CoemFunction(Stmt.Function declaration, Environment closure) {
     this.closure = closure;
     this.declaration = declaration;
   }
