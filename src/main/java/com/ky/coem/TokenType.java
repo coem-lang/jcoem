@@ -30,7 +30,7 @@ enum TokenType {
   IF, ELSE, FOR, WHILE, // control flow
   LET, BE, // variables
   TO, 
-  PRINT, KNOW,
+  PRINT, KNOW, SAY,
   // RETURN,
   // CLASS, SUPER, THIS, // classes
   TRUE, FALSE, NOTHING, // values

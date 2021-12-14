@@ -44,7 +44,7 @@ class Parser {
 
   private Stmt statement() {
     if (match(IF)) return ifStatement();
-    if (match(PRINT, KNOW)) return printStatement();
+    if (match(PRINT, KNOW, SAY)) return printStatement();
     if (match(AMPERSAND)) return returnStatement();
     if (match(WHILE)) return whileStatement();
     // if (match(RETURN)) return returnStatement();
@@ -371,6 +371,7 @@ class Parser {
         case WHILE:
         case PRINT:
         case KNOW:
+        case SAY:
         // case RETURN:
         case AMPERSAND:
           return;
