@@ -30,6 +30,21 @@ class Interpreter implements Expr.Visitor<Object>,
     // maybe
     BooleanSupplier maybe = () -> (new Random().nextDouble()) > 0.5;
     globals.define("maybe", maybe);
+
+    // print
+    // globals.define("print", new CoemCallable() {
+    //   @Override
+    //   public int arity() { return 0; }
+
+    //   @Override
+    //   public Object call(Interpreter interpreter, List<Object> arguments) {
+    //     System.out.println(arguments);
+    //     return null;
+    //   }
+
+    //   @Override
+    //   public String toString() { return "<native fn>"; }
+    // });
   }
 
   void interpret(List<Stmt> statements) {
