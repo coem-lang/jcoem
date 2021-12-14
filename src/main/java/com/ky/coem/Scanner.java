@@ -94,6 +94,10 @@ class Scanner {
       //     addToken(SLASH);
       //   }
       //   break;
+      case '*':
+      case '†':
+        while (peek() != '\n' && !isAtEnd()) advance();
+        break;
         
       case ' ':
       case '\r':
