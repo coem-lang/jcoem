@@ -204,7 +204,8 @@ class Parser {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
         }
-        arguments.add(expression());
+        // arguments.add(expression());
+        arguments.add(primary());
       } while (match(COMMA));
     }
 
@@ -226,7 +227,8 @@ class Parser {
   private Stmt ifStatement() {
     // consume(LEFT_PAREN, "Expect '(' after 'if'.");
     consume(EM_DASH, "Expect '—' after 'if'.");
-    Expr condition = expression();
+    // Expr condition = expression();
+    Expr condition = primary();
     // consume(RIGHT_PAREN, "Expect ')' after if condition.");
     consume(EM_DASH, "Expect '—' after if condition.");
 
@@ -261,7 +263,8 @@ class Parser {
 
   private Stmt whileStatement() {
     consume(EM_DASH, "Expect '—' after 'while'.");
-    Expr condition = expression();
+    // Expr condition = expression();
+    Expr condition = primary();
     consume(EM_DASH, "Expect '—' after condition.");
     Stmt body = statement();
 
