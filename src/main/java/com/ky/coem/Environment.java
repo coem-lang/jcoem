@@ -51,23 +51,6 @@ class Environment {
     throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
   }
 
-  void assign(Token name, Object value) {
-    Map.Entry<Pattern, Object> set = getSet(name.lexeme);
-    if (set != null) {
-      values.put(set.getKey(), value);
-      return;
-    }
-
-    // try enclosing env
-    if (enclosing != null) {
-      enclosing.assign(name, value);
-      return;
-    }
-
-    // throw after recursion
-    throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
-  }
-
   Map.Entry<Pattern, Object> getSet(String name) {
     for (Map.Entry<Pattern, Object> set : values.entrySet()) {
       Matcher matcher = set.getKey().matcher(name);

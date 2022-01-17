@@ -1,7 +1,3 @@
-/**
- * Describes different types of statements.
- */
-
 package com.ky.coem;
 
 import java.util.List;

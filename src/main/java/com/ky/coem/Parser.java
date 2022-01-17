@@ -90,26 +90,7 @@ class Parser {
 
   private Expr expression() {
     // return equality();
-    return assignment();
-  }
-
-  private Expr assignment() {
-    // Expr expr = equality();
-    Expr expr = or();
-
-    if (match(BE)) {
-      Token be = previous();
-      Expr value = assignment();
-
-      if (expr instanceof Expr.Variable) {
-        Token name = ((Expr.Variable)expr).name;
-        return new Expr.Assign(name, value);
-      }
-
-      error(be, "Invalid assignment target.");
-    }
-
-    return expr;
+    return or();
   }
 
   private Expr or() {
