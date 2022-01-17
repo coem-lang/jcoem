@@ -1,3 +1,7 @@
+/**
+ * Takes a List of Stmts and executes it.
+ */
+
 package com.ky.coem;
 
 import java.util.List;
@@ -80,11 +84,8 @@ class Interpreter implements Expr.Visitor<Object>,
     Object right = evaluate(expr.right);
 
     switch (expr.operator.type) {
-      // case BANG:
       case NOT:
         return !isTruthy(right);
-      // case MINUS:
-      //   return -(double)right;
       default:
     }
 
@@ -96,18 +97,6 @@ class Interpreter implements Expr.Visitor<Object>,
   public Object visitVariableExpr(Expr.Variable expr) {
     return environment.get(expr.name);
   }
-
-  // private void checkNumberOperand(Token operator, Object operand) {
-  //   if (operand instanceof Double) return;
-  //   throw new RuntimeError(operator, "Operand must be a number.");
-  // }
-
-  // private void checkNumberOperands(Token operator,
-  //                                  Object left, Object right) {
-  //   if (left instanceof Double && right instanceof Double) return;
-    
-  //   throw new RuntimeError(operator, "Operands must be numbers.");
-  // }
 
   private boolean isTruthy(Object object) {
     if (object == null) return false;
@@ -135,11 +124,6 @@ class Interpreter implements Expr.Visitor<Object>,
 
     return object.toString();
   }
-
-  // @Override
-  // public Object visitGroupingExpr(Expr.Grouping expr) {
-  //   return evaluate(expr.expression);
-  // }
 
   private Object evaluate(Expr expr) {
     return expr.accept(this);
@@ -241,17 +225,17 @@ class Interpreter implements Expr.Visitor<Object>,
     Object right = evaluate(expr.right); 
 
     switch (expr.operator.type) {
-      case PLUS:
-        if (left instanceof Double && right instanceof Double) {
-          return (double)left + (double)right;
-        } 
+      // case PLUS:
+      //   if (left instanceof Double && right instanceof Double) {
+      //     return (double)left + (double)right;
+      //   } 
 
-        if (left instanceof String && right instanceof String) {
-          return (String)left + (String)right;
-        }
+      //   if (left instanceof String && right instanceof String) {
+      //     return (String)left + (String)right;
+      //   }
 
-        throw new RuntimeError(expr.operator,
-            "Operands must be two numbers or two strings.");
+      //   throw new RuntimeError(expr.operator,
+      //       "Operands must be two numbers or two strings.");
       // case BANG_EQUAL: return !isEqual(left, right);
       case IS:
       case AM:
