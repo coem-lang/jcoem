@@ -12,7 +12,7 @@ enum TokenType {
   // LEFT_BRACE, RIGHT_BRACE,
   COLON,
   COMMA, DOT,
-  EM_DASH,
+  EMDASH,
   SEMICOLON,
   // NEWLINE,
   AMPERSAND,

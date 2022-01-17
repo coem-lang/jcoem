@@ -43,9 +43,9 @@ class Parser {
 
   private Stmt.Function function() {
     Token name = consume(IDENTIFIER, "Expect function name.");
-    consume(EM_DASH, "Expect '—' after function name.");
+    consume(EMDASH, "Expect '—' after function name.");
     List<Token> parameters = new ArrayList<>();
-    if (!check(EM_DASH)) {
+    if (!check(EMDASH)) {
       do {
         if (parameters.size() >= 255) {
           error(peek(), "Can't have more than 255 parameters.");
@@ -54,7 +54,7 @@ class Parser {
         parameters.add(consume(IDENTIFIER, "Expect identifier name."));
       } while (match(COMMA));
     }
-    consume(EM_DASH, "Expect '—' after parameters.");
+    consume(EMDASH, "Expect '—' after parameters.");
 
     // consume(LEFT_BRACE, "Expect '{' before function name.");
     consume(COLON, "Expect ':' before function name.");
@@ -145,7 +145,7 @@ class Parser {
     Expr expr = primary();
 
     while (true) {
-      if (match(EM_DASH)) {
+      if (match(EMDASH)) {
         expr = finishCall(expr);
       } else {
         break;
@@ -180,7 +180,7 @@ class Parser {
   private Expr finishCall(Expr callee) {
     List<Expr> arguments = new ArrayList<>();
 
-    if (!check(EM_DASH)) {
+    if (!check(EMDASH)) {
       do {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
@@ -190,7 +190,7 @@ class Parser {
       } while (match(COMMA));
     }
 
-    Token dash = consume(EM_DASH, "Expect ')' after arguments.");
+    Token dash = consume(EMDASH, "Expect ')' after arguments.");
 
     return new Expr.Call(callee, dash, arguments);
   }
@@ -207,11 +207,11 @@ class Parser {
 
   private Stmt ifStatement() {
     // consume(LEFT_PAREN, "Expect '(' after 'if'.");
-    consume(EM_DASH, "Expect '—' after 'if'.");
+    consume(EMDASH, "Expect '—' after 'if'.");
     // Expr condition = expression();
     Expr condition = primary();
     // consume(RIGHT_PAREN, "Expect ')' after if condition.");
-    consume(EM_DASH, "Expect '—' after if condition.");
+    consume(EMDASH, "Expect '—' after if condition.");
 
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
@@ -243,10 +243,10 @@ class Parser {
   }
 
   private Stmt whileStatement() {
-    consume(EM_DASH, "Expect '—' after 'while'.");
+    consume(EMDASH, "Expect '—' after 'while'.");
     // Expr condition = expression();
     Expr condition = primary();
-    consume(EM_DASH, "Expect '—' after condition.");
+    consume(EMDASH, "Expect '—' after condition.");
     Stmt body = statement();
 
     return new Stmt.While(condition, body);

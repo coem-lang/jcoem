@@ -62,7 +62,7 @@ class Scanner {
   private void scanToken() {
     char c = advance();
     switch (c) {
-      case '—': addToken(EM_DASH); break;
+      case '—': addToken(EMDASH); break;
       case ':': addToken(COLON); break;
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;

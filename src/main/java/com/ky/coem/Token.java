@@ -23,7 +23,7 @@ class Token {
       case COLON: return "COLON";
       case COMMA: return "COMMA";
       case DOT: return "DOT";
-      case EM_DASH: return "EM_DASH";
+      case EMDASH: return "EMDASH";
       case SEMICOLON: return "SEMICOLON";
       case AMPERSAND: return "AMPERSAND";
       case IDENTIFIER: return "IDENTIFIER";
