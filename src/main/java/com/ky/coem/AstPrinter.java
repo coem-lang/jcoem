@@ -33,14 +33,14 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
   @Override
   public String visitFunctionStmt(Stmt.Function stmt) {
     StringBuilder builder = new StringBuilder();
-    builder.append("(to " + stmt.name.lexeme + "(");
+    builder.append("(to " + stmt.name.lexeme + "—");
 
     for (Token param : stmt.params) {
       if (param != stmt.params.get(0)) builder.append(" ");
       builder.append(param.lexeme);
     }
 
-    builder.append(") ");
+    builder.append("— ");
 
     for (Stmt body : stmt.body) {
       builder.append(body.accept(this));
