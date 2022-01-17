@@ -241,21 +241,6 @@ class Interpreter implements Expr.Visitor<Object>,
     Object right = evaluate(expr.right); 
 
     switch (expr.operator.type) {
-      // case GREATER:
-      //   checkNumberOperands(expr.operator, left, right);
-      //   return (double)left > (double)right;
-      // case GREATER_EQUAL:
-      //   checkNumberOperands(expr.operator, left, right);
-      //   return (double)left >= (double)right;
-      // case LESS:
-      //   checkNumberOperands(expr.operator, left, right);
-      //   return (double)left < (double)right;
-      // case LESS_EQUAL:
-      //   checkNumberOperands(expr.operator, left, right);
-      //   return (double)left <= (double)right;
-      // case MINUS:
-      // checkNumberOperand(expr.operator, right);
-      //   return (double)left - (double)right;
       case PLUS:
         if (left instanceof Double && right instanceof Double) {
           return (double)left + (double)right;
@@ -267,10 +252,6 @@ class Interpreter implements Expr.Visitor<Object>,
 
         throw new RuntimeError(expr.operator,
             "Operands must be two numbers or two strings.");
-      // case SLASH:
-      //   return (double)left / (double)right;
-      // case STAR:
-      //   return (double)left * (double)right;
       // case BANG_EQUAL: return !isEqual(left, right);
       case IS:
       case AM:
