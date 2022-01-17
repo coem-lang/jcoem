@@ -33,7 +33,7 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
   @Override
   public String visitFunctionStmt(Stmt.Function stmt) {
     StringBuilder builder = new StringBuilder();
-    builder.append("(fun " + stmt.name.lexeme + "(");
+    builder.append("(to " + stmt.name.lexeme + "(");
 
     for (Token param : stmt.params) {
       if (param != stmt.params.get(0)) builder.append(" ");
@@ -74,10 +74,10 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
   @Override
   public String visitVarStmt(Stmt.Var stmt) {
     if (stmt.initializer == null) {
-      return parenthesize2("var", stmt.name);
+      return parenthesize2("let", stmt.name);
     }
 
-    return parenthesize2("var", stmt.name, "=", stmt.initializer);
+    return parenthesize2("let", stmt.name, "be", stmt.initializer);
   }
 
   @Override
@@ -87,7 +87,7 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
   @Override
   public String visitAssignExpr(Expr.Assign expr) {
-    return parenthesize2("=", expr.name.lexeme, expr.value);
+    return parenthesize2("be", expr.name.lexeme, expr.value);
   }
 
   @Override
@@ -103,7 +103,7 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
 
   @Override
   public String visitLiteralExpr(Expr.Literal expr) {
-    if (expr.value == null) return "nil";
+    if (expr.value == null) return "nothing";
     return expr.value.toString();
   }
 
@@ -160,5 +160,5 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
       }
     }
   }
-  
+
 }
