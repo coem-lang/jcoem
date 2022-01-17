@@ -1,3 +1,7 @@
+/**
+ * Runs Coem code as passed into the program.
+ */
+
 package com.ky.coem;
 
 import java.io.BufferedReader;
@@ -7,9 +11,6 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-
-// import com.ky.coem.Token;
-// import com.ky.coem.Scanner;
 
 public class Coem {
 
@@ -51,47 +52,31 @@ public class Coem {
   }
 
   private static void run(String source) {
+    // turn source string into list of tokens
     Scanner scanner = new Scanner(source);
     List<Token> tokens = scanner.scanTokens();
 
-    // PRINT THE TOKENS
-    // System.out.println("TOKENS");
-    // for (Token token : tokens) {
-    //   System.out.print(token);
-    //   System.out.print(", ");
-    // }
-    // System.out.println();
-    // System.out.println();
+    // (print the tokens)
+    for (Token token : tokens) {
+      System.out.print(token);
+      System.out.print(", ");
+    }
+    System.out.println();
 
+    // turn list of tokens into list of statements
     Parser parser = new Parser(tokens);
-    // Expr expression = parser.parse();
     List<Stmt> statements = parser.parse();
 
     // Stop if there was a syntax error.
     if (hadError) return;
 
-    // PRINT THE AST
-    // System.out.println("ASTS");
-    // AstPrinter printer = new AstPrinter();
-    // for (Stmt statement : statements) {
-    //   if (statement instanceof Stmt.Expression) {
-    //     Stmt.Expression expr = (Stmt.Expression) statement;
-    //     System.out.println(printer.print(expr.expression));
-    //   } else if (statement instanceof Stmt.Print) {
-    //     Stmt.Print print = (Stmt.Print) statement;
-    //     System.out.println(printer.print(print.expression));
-    //   } else if (statement instanceof Stmt.Var) {
-    //     Stmt.Var var = (Stmt.Var) statement;
-    //     System.out.println(printer.print(var.initializer));
-    //   }
-    // }
-    // System.out.println();
-    // // System.out.println(new AstPrinter().print(expression));
-    // // System.out.println();
+    // (print the AST)
+    AstPrinter printer = new AstPrinter();
+    for (Stmt statement : statements) {
+      System.out.println(printer.print(statement));
+    }
 
-    // INTERPRET THE EXPRESSION
-    // interpreter.interpret(expression);
-    // System.out.println("OUTPUT");
+    // interpret the statements
     interpreter.interpret(statements);
   }
 
