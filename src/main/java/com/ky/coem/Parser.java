@@ -174,23 +174,6 @@ class Parser {
     return expr;
   }
 
-  private Expr finishCall(Expr callee) {
-    List<Expr> arguments = new ArrayList<>();
-
-    if (!check(EM_DASH)) {
-      do {
-        if (arguments.size() >= 255) {
-          error(peek(), "Can't have more than 255 arguments.");
-        }
-        arguments.add(expression());
-      } while (match(COMMA));
-    }
-
-    Token dash = consume(EM_DASH, "Expect ')' after arguments.");
-
-    return new Expr.Call(callee, dash, arguments);
-  }
-
   private Expr primary() {
     if (match(FALSE)) return new Expr.Literal(false);
     if (match(TRUE)) return new Expr.Literal(true);
@@ -211,6 +194,23 @@ class Parser {
     // }
 
     throw error(peek(), "Expect expression.");
+  }
+
+  private Expr finishCall(Expr callee) {
+    List<Expr> arguments = new ArrayList<>();
+
+    if (!check(EM_DASH)) {
+      do {
+        if (arguments.size() >= 255) {
+          error(peek(), "Can't have more than 255 arguments.");
+        }
+        arguments.add(expression());
+      } while (match(COMMA));
+    }
+
+    Token dash = consume(EM_DASH, "Expect ')' after arguments.");
+
+    return new Expr.Call(callee, dash, arguments);
   }
 
   private Stmt statement() {
