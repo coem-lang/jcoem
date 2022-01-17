@@ -1,3 +1,7 @@
+/**
+ * Holds Map of identifiers and their corresponding values.
+ */
+
 package com.ky.coem;
 
 import java.util.HashMap;
