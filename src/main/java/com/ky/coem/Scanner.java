@@ -1,3 +1,7 @@
+/**
+ * Takes a source String and returns a List of Tokens.
+ */
+
 package com.ky.coem;
 
 import java.util.ArrayList;
@@ -58,15 +62,10 @@ class Scanner {
   private void scanToken() {
     char c = advance();
     switch (c) {
-      // case '(': addToken(LEFT_PAREN); break;
-      // case ')': addToken(RIGHT_PAREN); break;
       case '—': addToken(EM_DASH); break;
-      // case '{': addToken(LEFT_BRACE); break;
-      // case '}': addToken(RIGHT_BRACE); break;
       case ':': addToken(COLON); break;
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;
-      case '+': addToken(PLUS); break;
       case ';': addToken(SEMICOLON); break;
       case '&': addToken(AMPERSAND); break;
       case '†':
@@ -87,47 +86,36 @@ class Scanner {
       case '"': string(); break;
 
       default:
-        if (isDigit(c)) {
-          number();
-        // // normal
-        // } else if (isAlpha(c)) {
-        //   identifier();
-        // } else {
-        //   coem.error(line, "Unexpected character.");
-        // }
-        // regex
-        } else {
-          identifier();
-        }
+        identifier();
         break;
     }
+  }
+
+  private char advance() {
+    return source.charAt(current++);
+  }
+
+  private void addToken(TokenType type) {
+    // System.out.println(type);
+    addToken(type, null);
+  }
+
+  private void addToken(TokenType type, Object literal) {
+    // System.out.println(literal);
+    String text = source.substring(start, current);
+    tokens.add(new Token(type, text, literal, line));
   }
 
   private void identifier() {
     // normal
     // while (isAlphaNumeric(peek())) advance();
     // regex
-    while (isNotBoundary(peek())) advance();
+    while (isIdentifierChar(peek())) advance();
 
     String text = source.substring(start, current);
     TokenType type = keywords.get(text);
     if (type == null) type = IDENTIFIER;
     addToken(type);
-  }
-
-  private void number() {
-    while (isDigit(peek())) advance();
-
-    // Look for a fractional part.
-    if (peek() == '.' && isDigit(peekNext())) {
-      // Consume the "."
-      advance();
-
-      while (isDigit(peek())) advance();
-    }
-
-    addToken(NUMBER,
-        Double.parseDouble(source.substring(start, current)));
   }
 
   private void string() {
@@ -177,7 +165,7 @@ class Scanner {
   //   return isAlpha(c) || isDigit(c);
   // }
 
-  private boolean isNotBoundary(char c) {
+  private boolean isIdentifierChar(char c) {
     return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
     // return (!isSpace(c) && !isNewline(c) && !isEmdash(c));
   }
@@ -207,20 +195,5 @@ class Scanner {
 
   private boolean isAtEnd() {
     return current >= source.length();
-  }
-
-  private char advance() {
-    return source.charAt(current++);
-  }
-
-  private void addToken(TokenType type) {
-    // System.out.println(type);
-    addToken(type, null);
-  }
-
-  private void addToken(TokenType type, Object literal) {
-    // System.out.println(literal);
-    String text = source.substring(start, current);
-    tokens.add(new Token(type, text, literal, line));
   }
 }
