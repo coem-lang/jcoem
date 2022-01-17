@@ -256,7 +256,8 @@ class Parser {
     Expr expr = expression();
     consume(SEMICOLON, "Expect ';' after value.");
     // consume(NEWLINE, "Expect newline after value.");
-    return new Stmt.Expression(expr);
+    // return new Stmt.Expression(expr);
+    return new Stmt.Print(expr);
   }
 
   private boolean match(TokenType... types) {
