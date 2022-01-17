@@ -327,7 +327,6 @@ class Parser {
       // if (previous().type == NEWLINE) return;
 
       switch (peek().type) {
-        // case CLASS:
         case TO:
         case LET:
         case FOR:
@@ -336,7 +335,6 @@ class Parser {
         case PRINT:
         case KNOW:
         case SAY:
-        // case RETURN:
         case AMPERSAND:
           return;
         default:
