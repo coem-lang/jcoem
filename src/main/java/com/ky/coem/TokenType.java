@@ -1,3 +1,7 @@
+/**
+ * Defines all valid tokens of the grammar.
+ */
+
 package com.ky.coem;
 
 // import java.beans.beancontext.BeanContext;
@@ -7,14 +11,14 @@ enum TokenType {
   // LEFT_PAREN, RIGHT_PAREN,
   // LEFT_BRACE, RIGHT_BRACE,
   COLON,
-  COMMA, DOT, PLUS,
+  COMMA, DOT,
   EM_DASH,
   SEMICOLON,
   // NEWLINE,
   AMPERSAND,
 
   // Literals.
-  IDENTIFIER, STRING, NUMBER,
+  IDENTIFIER, STRING,
 
   // Keywords.
   AND, OR, // logic
