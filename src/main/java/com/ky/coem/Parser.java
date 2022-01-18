@@ -32,7 +32,7 @@ class Parser {
 
   private Stmt declaration() {
     try {
-      if (check(NEWLINE)) {
+      while (check(NEWLINE)) {
         consume(NEWLINE, "Expect newline between statements");
       }
       if (match(TO)) return function();
@@ -67,7 +67,7 @@ class Parser {
   private List<Stmt> block() {
     List<Stmt> statements = new ArrayList<>();
 
-    if (check(NEWLINE)) {
+    while (check(NEWLINE)) {
       consume(NEWLINE, "Expect newline between statements.");
     }
 
@@ -192,10 +192,6 @@ class Parser {
   }
 
   private Stmt statement() {
-    // if (check(NEWLINE)) {
-    //   consume(NEWLINE, "Expect newline between statements.");
-    // }
-
     if (match(IF)) return ifStatement();
     if (match(PRINT, KNOW, SAY)) return printStatement();
     if (match(AMPERSAND)) return returnStatement();
