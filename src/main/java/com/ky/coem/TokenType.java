@@ -8,13 +8,9 @@ package com.ky.coem;
 
 enum TokenType {
   // Single-character tokens.
-  // LEFT_PAREN, RIGHT_PAREN,
-  // LEFT_BRACE, RIGHT_BRACE,
   COLON,
   COMMA, DOT,
   EMDASH,
-  // SEMICOLON,
-  // NEWLINE,
   AMPERSAND,
   POUND,
 
@@ -28,7 +24,6 @@ enum TokenType {
   LET, BE, // variables
   TO, 
   TRUE, FALSE, NOTHING, // values
-  // MAYBE,
   NOT,
 
   NEWLINE,
