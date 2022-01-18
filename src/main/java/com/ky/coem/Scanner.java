@@ -82,7 +82,7 @@ class Scanner {
         line++;
         break;
 
-      case '"': string(); break;
+      case '“': string(); break;
 
       default:
         identifier();
@@ -117,7 +117,7 @@ class Scanner {
   }
 
   private void string() {
-    while (peek() != '"' && !isAtEnd()) {
+    while (peek() != '”' && !isAtEnd()) {
       if (peek() == '\n') line++;
       advance();
     }
