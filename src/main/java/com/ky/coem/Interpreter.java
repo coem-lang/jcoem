@@ -210,6 +210,12 @@ class Interpreter implements Expr.Visitor<Object>,
   }
 
   @Override
+  public Void visitDirectiveStmt(Stmt.Directive stmt) {
+    globals.define(stmt.name.lexeme, stmt.value.lexeme);
+    return null;
+  }
+
+  @Override
   public Object visitBinaryExpr(Expr.Binary expr) {
     Object left = evaluate(expr.left);
     Object right = evaluate(expr.right); 

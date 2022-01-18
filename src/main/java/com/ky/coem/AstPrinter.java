@@ -81,6 +81,11 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
   }
 
   @Override
+  public String visitDirectiveStmt(Stmt.Directive stmt) {
+    return parenthesize2("dir", stmt.name, stmt.value);
+  }
+
+  @Override
   public String visitBinaryExpr(Expr.Binary expr) {
     return parenthesize(expr.operator.lexeme,
                         expr.left, expr.right);

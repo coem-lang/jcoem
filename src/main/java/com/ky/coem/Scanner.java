@@ -64,6 +64,7 @@ class Scanner {
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;
       case '&': addToken(AMPERSAND); break;
+      case '#': addToken(POUND); break;
       case '†':
         while (peek() != '\n' && !isAtEnd()) advance();
         break;

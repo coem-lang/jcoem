@@ -37,6 +37,7 @@ class Parser {
 
   private Stmt declaration() {
     try {
+      if (match(POUND)) return directive();
       if (match(TO)) return function();
       if (match(LET)) return varDeclaration();
       return statement();
@@ -44,6 +45,17 @@ class Parser {
       synchronize();
       return null;
     }
+  }
+
+  private Stmt.Directive directive() {
+    Token name;
+    if (check(BE)) {
+      name = consume(BE, "Expect directive name after pound.");
+    } else {
+      name = consume(IDENTIFIER, "Expect directive name after pound.");
+    }
+    Token value = consume(IDENTIFIER, "Expect value after directive name.");
+    return new Stmt.Directive(name, value);
   }
 
   private Stmt.Function function() {

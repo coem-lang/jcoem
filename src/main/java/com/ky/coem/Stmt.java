@@ -11,6 +11,7 @@ abstract class Stmt {
     R visitReturnStmt(Return stmt);
     R visitVarStmt(Var stmt);
     R visitWhileStmt(While stmt);
+    R visitDirectiveStmt(Directive stmt);
   }
   static class Block extends Stmt {
     Block(List<Stmt> statements) {
@@ -109,6 +110,20 @@ abstract class Stmt {
 
     final Expr condition;
     final Stmt body;
+  }
+  static class Directive extends Stmt {
+    Directive(Token name, Token value) {
+      this.name = name;
+      this.value = value;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitDirectiveStmt(this);
+    }
+
+    final Token name;
+    final Token value;
   }
 
   abstract <R> R accept(Visitor<R> visitor);

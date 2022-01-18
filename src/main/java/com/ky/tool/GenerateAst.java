@@ -22,7 +22,6 @@ public class GenerateAst {
       "Unary    : Token operator, Expr right",
       "Variable : Token name"
     ));
-    // "Grouping : Expr expression",
 
     defineAst(outputDir, "Stmt", Arrays.asList(
       "Block      : List<Stmt> statements",
@@ -30,8 +29,9 @@ public class GenerateAst {
       "Function   : Token name, List<Token> params, List<Stmt> body",
       "If         : Expr condition, Stmt thenBranch, Stmt elseBranch",
       "Return     : Token keyword, Expr value",
-      "Var        : Token name, Expr initializer",
-      "While      : Expr condition, Stmt body"
+      "Var        : Token name, Expr value",
+      "While      : Expr condition, Stmt body",
+      "Directive  : Token name, Token value"
     ));
   }
 

@@ -16,6 +16,7 @@ enum TokenType {
   // SEMICOLON,
   // NEWLINE,
   AMPERSAND,
+  POUND,
 
   // Literals.
   IDENTIFIER, STRING,
