@@ -28,7 +28,7 @@ class Interpreter implements Expr.Visitor<Object>,
       }
 
       @Override
-      public String toString() { return "<native fn>"; }
+      public String toString() { return "<native clock fn>"; }
     });
 
     // maybe
@@ -50,7 +50,7 @@ class Interpreter implements Expr.Visitor<Object>,
       }
 
       @Override
-      public String toString() { return "<native fn>"; }
+      public String toString() { return "<native print fn>"; }
     };
     globals.define("print", print);
     globals.define("know", print);
@@ -183,13 +183,6 @@ class Interpreter implements Expr.Visitor<Object>,
   }
 
   @Override
-  public Void visitPrintStmt(Stmt.Print stmt) {
-    Object value = evaluate(stmt.expression);
-    // System.out.println(stmt.expression.toString() + " " + stringify(value));
-    return null;
-  }
-
-  @Override
   public Void visitReturnStmt(Stmt.Return stmt) {
     Object value = null;
     if (stmt.value != null) value = evaluate(stmt.value);
@@ -260,7 +253,9 @@ class Interpreter implements Expr.Visitor<Object>,
 
     CoemCallable function = (CoemCallable)callee;
     if (arguments.size() != function.arity()) {
-      throw new RuntimeError(expr.dash, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+      if (!function.toString().equals("<native print fn>")) {
+        throw new RuntimeError(expr.dash, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+      }
     }
 
     return function.call(this, arguments);

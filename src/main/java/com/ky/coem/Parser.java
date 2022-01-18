@@ -197,7 +197,6 @@ class Parser {
 
   private Stmt statement() {
     if (match(IF)) return ifStatement();
-    // if (match(PRINT, KNOW, SAY)) return printStatement();
     if (match(AMPERSAND)) return returnStatement();
     if (match(WHILE)) return whileStatement();
     if (match(COLON)) return new Stmt.Block(block());
@@ -220,11 +219,6 @@ class Parser {
 
     return new Stmt.If(condition, thenBranch, elseBranch);
   }
-
-  // private Stmt printStatement() {
-  //   Expr value = expression();
-  //   return new Stmt.Print(value);
-  // }
 
   private Stmt returnStatement() {
     Token ampersand = previous();
@@ -332,9 +326,6 @@ class Parser {
         case FOR:
         case IF:
         case WHILE:
-        // case PRINT:
-        // case KNOW:
-        // case SAY:
         case AMPERSAND:
           return;
         default:
