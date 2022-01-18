@@ -104,9 +104,6 @@ class Scanner {
   }
 
   private void identifier() {
-    // normal
-    // while (isAlphaNumeric(peek())) advance();
-    // regex
     while (isIdentifierChar(peek())) advance();
 
     String text = source.substring(start, current);
@@ -153,19 +150,7 @@ class Scanner {
     return source.charAt(current + 1);
   }
 
-  // private boolean isAlpha(char c) {
-  //   return (c >= 'a' && c <= 'z') ||
-  //          (c >= 'A' && c <= 'Z') ||
-  //           c == '_';
-  // }
-
-  // private boolean isAlphaNumeric(char c) {
-  //   return isAlpha(c) || isDigit(c);
-  // }
-
   private boolean isIdentifierChar(char c) {
-    // return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
-    // return (!isSpace(c) && !isNewline(c) && !isEmdash(c) && !isAtEnd());
     return (
       (c >= 'A' && c <= 'Z') ||
       (c >= 'a' && c <= 'z') ||
@@ -173,26 +158,6 @@ class Scanner {
       (c == '[' || c == ']') ||
       (c == '|' || c == '?' || c == '*' || c == '+')
     );
-  }
-
-  private boolean isSpace(char c) {
-    return c == ' ';
-  }
-
-  // private boolean isSemicolon(char c) {
-  //   return c == ';';
-  // }
-
-  private boolean isNewline(char c) {
-    return c == '\n';
-  }
-
-  private boolean isEmdash(char c) {
-    return c == '—';
-  }
-
-  private boolean isDigit(char c) {
-    return c >= '0' && c <= '9';
   }
 
   private boolean isAtEnd() {

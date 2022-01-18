@@ -87,8 +87,6 @@ class Parser {
       value = expression();
     }
 
-    System.out.println(name + " " + value);
-
     return new Stmt.Var(name, value);
   }
 
