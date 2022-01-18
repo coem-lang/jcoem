@@ -255,7 +255,7 @@ class Interpreter implements Expr.Visitor<Object>,
     }
 
     if (!(callee instanceof CoemCallable)) {
-      throw new RuntimeError(expr.dash, "Can only call functions and classes.");
+      throw new RuntimeError(expr.dash, "Can only call functions.");
     }
 
     CoemCallable function = (CoemCallable)callee;
