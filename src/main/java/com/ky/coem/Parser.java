@@ -85,7 +85,12 @@ class Parser {
     }
 
     while (!check(DOT) && !isAtEnd()) {
-      statements.add(declaration());
+      while (check(NEWLINE)) {
+        consume(NEWLINE, "Expect newline between statements.");
+      }
+      if (!check(DOT) && !isAtEnd()) {
+        statements.add(declaration());
+      }
     }
 
     consume(DOT, "Expect '.' after block.");
@@ -201,7 +206,7 @@ class Parser {
       } while (match(COMMA));
     }
 
-    Token dash = consume(EMDASH, "Expect ')' after arguments.");
+    Token dash = consume(EMDASH, "Expect '—' after arguments.");
 
     return new Expr.Call(callee, dash, arguments);
   }
