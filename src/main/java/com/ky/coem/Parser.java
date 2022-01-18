@@ -87,12 +87,12 @@ class Parser {
 
     Token name = consume(IDENTIFIER, "Expect variable name.");
 
-    Expr initializer = null;
+    Expr value = null;
     if (match(BE)) {
-      initializer = expression();
+      value = expression();
     }
 
-    return new Stmt.Var(name, initializer);
+    return new Stmt.Var(name, value);
   }
 
   private Expr expression() {
