@@ -36,19 +36,22 @@ class Interpreter implements Expr.Visitor<Object>,
     globals.define("maybe", maybe);
 
     // print
-    // globals.define("print", new CoemCallable() {
-    //   @Override
-    //   public int arity() { return 0; }
+    globals.define("print", new CoemCallable() {
+      @Override
+      public int arity() { return 1; }
 
-    //   @Override
-    //   public Object call(Interpreter interpreter, List<Object> arguments) {
-    //     System.out.println(arguments);
-    //     return null;
-    //   }
+      @Override
+      public Object call(Interpreter interpreter, List<Object> arguments) {
+        for (int i = 0; i < arguments.size(); i++) {
+          System.out.print(arguments.get(i));
+        }
+        System.out.println();
+        return null;
+      }
 
-    //   @Override
-    //   public String toString() { return "<native fn>"; }
-    // });
+      @Override
+      public String toString() { return "<native fn>"; }
+    });
   }
 
   void interpret(List<Stmt> statements) {
@@ -180,7 +183,6 @@ class Interpreter implements Expr.Visitor<Object>,
   public Void visitPrintStmt(Stmt.Print stmt) {
     Object value = evaluate(stmt.expression);
     // System.out.println(stmt.expression.toString() + " " + stringify(value));
-    System.out.println(stringify(value));
     return null;
   }
 
