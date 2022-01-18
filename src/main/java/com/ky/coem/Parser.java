@@ -15,6 +15,7 @@ class Parser {
 
   private final List<Token> tokens;
   private int current = 0;
+  private boolean isConditionStarted = false;
 
   Parser(List<Token> tokens) {
     this.tokens = tokens;
@@ -144,11 +145,13 @@ class Parser {
   private Expr call() {
     Expr expr = primary();
 
-    while (true) {
-      if (match(EMDASH)) {
-        expr = finishCall(expr);
-      } else {
-        break;
+    if (!isConditionStarted) {
+      while (true) {
+        if (match(EMDASH)) {
+          expr = finishCall(expr);
+        } else {
+          break;
+        }
       }
     }
 
@@ -206,12 +209,11 @@ class Parser {
   }
 
   private Stmt ifStatement() {
-    // consume(LEFT_PAREN, "Expect '(' after 'if'.");
     consume(EMDASH, "Expect '—' after 'if'.");
-    // Expr condition = expression();
-    Expr condition = primary();
-    // consume(RIGHT_PAREN, "Expect ')' after if condition.");
+    isConditionStarted = true;
+    Expr condition = expression();
     consume(EMDASH, "Expect '—' after if condition.");
+    isConditionStarted = false;
 
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
@@ -244,9 +246,10 @@ class Parser {
 
   private Stmt whileStatement() {
     consume(EMDASH, "Expect '—' after 'while'.");
-    // Expr condition = expression();
-    Expr condition = primary();
+    isConditionStarted = true;
+    Expr condition = expression();
     consume(EMDASH, "Expect '—' after condition.");
+    isConditionStarted = false;
     Stmt body = statement();
 
     return new Stmt.While(condition, body);
