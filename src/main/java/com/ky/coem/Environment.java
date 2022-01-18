@@ -21,19 +21,9 @@ class Environment {
     this.enclosing = enclosing;
   }
 
-  // private final Map<String, Object> values = new HashMap<>();
   private final Map<Pattern, Object> values = new HashMap<>();
 
   Object get(Token name) {
-    // if (values.containsKey(name.lexeme)) {
-    //   return values.get(name.lexeme);
-    // }
-    // for (Map.Entry<Pattern, Object> set : values.entrySet()) {
-    //   Matcher matcher = set.getKey().matcher(name.lexeme);
-    //   if (matcher.find()) {
-    //     return set.getValue();
-    //   }
-    // }
     Map.Entry<Pattern, Object> set = getSet(name.lexeme);
     if (set != null) {
       Object value = set.getValue();
@@ -62,13 +52,26 @@ class Environment {
   }
 
   void define(String name, Object value) {
-    // values.put(name, value);
     Pattern pat = Pattern.compile(name);
     Map.Entry<Pattern, Object> set = getSet(name);
+
+    // redefine in current environment
     if (set != null) {
       values.put(set.getKey(), value);
-    } else {
-      values.put(pat, value);
+      return;
     }
+    
+    if (enclosing != null) {
+      Map.Entry<Pattern, Object> enclosingSet = enclosing.getSet(name);
+      // redefine in enclosing environment
+      if (enclosingSet != null) {
+        enclosing.define(name, value);
+        return;
+      }
+    }
+
+    // define new in current environment
+    values.put(pat, value);
+
   }
 }
