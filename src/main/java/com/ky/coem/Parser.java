@@ -24,7 +24,12 @@ class Parser {
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
-      statements.add(declaration());
+      while (check(NEWLINE)) {
+        consume(NEWLINE, "Expect newline between statements");
+      }
+      if (!isAtEnd()) {
+        statements.add(declaration());
+      }
     }
 
     return statements;
@@ -32,9 +37,6 @@ class Parser {
 
   private Stmt declaration() {
     try {
-      while (check(NEWLINE)) {
-        consume(NEWLINE, "Expect newline between statements");
-      }
       if (match(TO)) return function();
       if (match(LET)) return varDeclaration();
       return statement();
