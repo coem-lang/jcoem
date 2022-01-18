@@ -48,14 +48,13 @@ class Parser {
   }
 
   private Stmt.Directive directive() {
-    Token name;
-    if (check(BE)) {
-      name = consume(BE, "Expect directive name after pound.");
-    } else {
-      name = consume(IDENTIFIER, "Expect directive name after pound.");
+    if (match(IDENTIFIER, BE)) {
+      Token name = previous();
+      Token value = consume(IDENTIFIER, "Expect value after directive name.");
+      return new Stmt.Directive(name, value);
     }
-    Token value = consume(IDENTIFIER, "Expect value after directive name.");
-    return new Stmt.Directive(name, value);
+
+    throw error(peek(), "Expect directive name after pound.");
   }
 
   private Stmt.Function function() {
