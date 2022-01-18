@@ -32,6 +32,9 @@ class Parser {
 
   private Stmt declaration() {
     try {
+      if (check(NEWLINE)) {
+        consume(NEWLINE, "Expect newline between statements");
+      }
       if (match(TO)) return function();
       if (match(LET)) return varDeclaration();
       return statement();
@@ -42,10 +45,6 @@ class Parser {
   }
 
   private Stmt.Function function() {
-    if (check(NEWLINE)) {
-      consume(NEWLINE, "Expect newline between statements.");
-    }
-
     Token name = consume(IDENTIFIER, "Expect function name.");
     consume(EMDASH, "Expect '—' after function name.");
     List<Token> parameters = new ArrayList<>();
@@ -81,16 +80,14 @@ class Parser {
   }
 
   private Stmt varDeclaration() {
-    if (check(NEWLINE)) {
-      consume(NEWLINE, "Expect newline between statements.");
-    }
-
     Token name = consume(IDENTIFIER, "Expect variable name.");
 
     Expr value = null;
     if (match(BE)) {
       value = expression();
     }
+
+    System.out.println(name + " " + value);
 
     return new Stmt.Var(name, value);
   }
@@ -197,9 +194,9 @@ class Parser {
   }
 
   private Stmt statement() {
-    if (check(NEWLINE)) {
-      consume(NEWLINE, "Expect newline between statements.");
-    }
+    // if (check(NEWLINE)) {
+    //   consume(NEWLINE, "Expect newline between statements.");
+    // }
 
     if (match(IF)) return ifStatement();
     if (match(PRINT, KNOW, SAY)) return printStatement();
