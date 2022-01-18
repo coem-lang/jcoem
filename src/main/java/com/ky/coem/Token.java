@@ -24,7 +24,8 @@ class Token {
       case COMMA: return "COMMA";
       case DOT: return "DOT";
       case EMDASH: return "EMDASH";
-      case SEMICOLON: return "SEMICOLON";
+      // case SEMICOLON: return "SEMICOLON";
+      case NEWLINE: return "NEWLINE";
       case AMPERSAND: return "AMPERSAND";
       case IDENTIFIER: return "IDENTIFIER";
       case STRING: return "STRING";

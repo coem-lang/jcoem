@@ -66,7 +66,7 @@ class Scanner {
       case ':': addToken(COLON); break;
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;
-      case ';': addToken(SEMICOLON); break;
+      // case ';': addToken(SEMICOLON); break;
       case '&': addToken(AMPERSAND); break;
       case '†':
         while (peek() != '\n' && !isAtEnd()) advance();
@@ -79,7 +79,7 @@ class Scanner {
         break;
 
       case '\n':
-        // addToken(NEWLINE);
+        addToken(NEWLINE);
         line++;
         break;
 
@@ -113,6 +113,7 @@ class Scanner {
     while (isIdentifierChar(peek())) advance();
 
     String text = source.substring(start, current);
+    System.out.println(text);
     TokenType type = keywords.get(text);
     if (type == null) type = IDENTIFIER;
     addToken(type);
@@ -166,24 +167,28 @@ class Scanner {
   // }
 
   private boolean isIdentifierChar(char c) {
-    return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
-    // return (!isSpace(c) && !isNewline(c) && !isEmdash(c));
+    // return (!isSpace(c) && !isSemicolon(c) && !isEmdash(c));
+    // return (!isSpace(c) && !isNewline(c) && !isEmdash(c) && !isAtEnd());
+    return (
+      (c >= 'A' && c <= 'Z') ||
+      (c >= 'a' && c <= 'z') ||
+      (c == '(' || c == ')') ||
+      (c == '[' || c == ']') ||
+      (c == '?' || c == '*' || c == '+')
+    );
   }
 
   private boolean isSpace(char c) {
     return c == ' ';
   }
 
-  private boolean isSemicolon(char c) {
-    return c == ';';
-  }
-
-  // private boolean isNewline(char c) {
-  //   System.out.print(c);
-  //   System.out.print(' ');
-  //   System.out.println(c == '\n');
-  //   return c == '\n';
+  // private boolean isSemicolon(char c) {
+  //   return c == ';';
   // }
+
+  private boolean isNewline(char c) {
+    return c == '\n';
+  }
 
   private boolean isEmdash(char c) {
     return c == '—';

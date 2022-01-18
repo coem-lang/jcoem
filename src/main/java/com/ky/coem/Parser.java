@@ -24,7 +24,6 @@ class Parser {
   List<Stmt> parse() {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
-      // statements.add(statement());
       statements.add(declaration());
     }
 
@@ -43,6 +42,10 @@ class Parser {
   }
 
   private Stmt.Function function() {
+    if (check(NEWLINE)) {
+      consume(NEWLINE, "Expect newline between statements.");
+    }
+
     Token name = consume(IDENTIFIER, "Expect function name.");
     consume(EMDASH, "Expect '—' after function name.");
     List<Token> parameters = new ArrayList<>();
@@ -57,8 +60,7 @@ class Parser {
     }
     consume(EMDASH, "Expect '—' after parameters.");
 
-    // consume(LEFT_BRACE, "Expect '{' before function name.");
-    consume(COLON, "Expect ':' before function name.");
+    consume(COLON, "Expect ':' before function body.");
     List<Stmt> body = block();
     return new Stmt.Function(name, parameters, body);
   }
@@ -66,17 +68,23 @@ class Parser {
   private List<Stmt> block() {
     List<Stmt> statements = new ArrayList<>();
 
-    // while (!check(RIGHT_BRACE) && !isAtEnd()) {
+    if (check(NEWLINE)) {
+      consume(NEWLINE, "Expect newline between statements.");
+    }
+
     while (!check(DOT) && !isAtEnd()) {
       statements.add(declaration());
     }
 
-    // consume(RIGHT_BRACE, "Expect '}' after block.");
     consume(DOT, "Expect '.' after block.");
     return statements;
   }
 
   private Stmt varDeclaration() {
+    if (check(NEWLINE)) {
+      consume(NEWLINE, "Expect newline between statements.");
+    }
+
     Token name = consume(IDENTIFIER, "Expect variable name.");
 
     Expr initializer = null;
@@ -84,13 +92,10 @@ class Parser {
       initializer = expression();
     }
 
-    consume(SEMICOLON, "Expect ';' after variable declaration.");
-    // consume(NEWLINE, "Expect newline after variable declaration.");
     return new Stmt.Var(name, initializer);
   }
 
   private Expr expression() {
-    // return equality();
     return or();
   }
 
@@ -171,12 +176,6 @@ class Parser {
       return new Expr.Variable(previous());
     }
 
-    // if (match(LEFT_PAREN)) {
-    //   Expr expr = expression();
-    //   consume(RIGHT_PAREN, "Expect ')' after expression.");
-    //   return new Expr.Grouping(expr);
-    // }
-
     throw error(peek(), "Expect expression.");
   }
 
@@ -188,7 +187,6 @@ class Parser {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
         }
-        // arguments.add(expression());
         arguments.add(primary());
       } while (match(COMMA));
     }
@@ -199,6 +197,10 @@ class Parser {
   }
 
   private Stmt statement() {
+    if (check(NEWLINE)) {
+      consume(NEWLINE, "Expect newline between statements.");
+    }
+
     if (match(IF)) return ifStatement();
     if (match(PRINT, KNOW, SAY)) return printStatement();
     if (match(AMPERSAND)) return returnStatement();
@@ -226,21 +228,16 @@ class Parser {
 
   private Stmt printStatement() {
     Expr value = expression();
-    consume(SEMICOLON, "Expect ';' after value.");
-    // consume(NEWLINE, "Expect newline after value.");
     return new Stmt.Print(value);
   }
 
   private Stmt returnStatement() {
     Token ampersand = previous();
     Expr value = null;
-    if (!check(SEMICOLON)) {
-    // if (!check(NEWLINE)) {
+    if (!check(NEWLINE)) {
       value = expression();
     }
     
-    consume(SEMICOLON, "Expect ';' after return value.");
-    // consume(NEWLINE, "Expect newline after return value.");
     return new Stmt.Return(ampersand, value);
   }
 
@@ -257,9 +254,6 @@ class Parser {
 
   private Stmt expressionStatement() {
     Expr expr = expression();
-    consume(SEMICOLON, "Expect ';' after value.");
-    // consume(NEWLINE, "Expect newline after value.");
-    // return new Stmt.Expression(expr);
     return new Stmt.Print(expr);
   }
 
@@ -311,8 +305,7 @@ class Parser {
     advance();
 
     while (!isAtEnd()) {
-      if (previous().type == SEMICOLON) return;
-      // if (previous().type == NEWLINE) return;
+      if (previous().type == NEWLINE) return;
 
       switch (peek().type) {
         case TO:
