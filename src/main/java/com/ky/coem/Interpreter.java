@@ -36,7 +36,7 @@ class Interpreter implements Expr.Visitor<Object>,
     globals.define("maybe", maybe);
 
     // print
-    globals.define("print", new CoemCallable() {
+    CoemCallable print = new CoemCallable() {
       @Override
       public int arity() { return 1; }
 
@@ -51,7 +51,10 @@ class Interpreter implements Expr.Visitor<Object>,
 
       @Override
       public String toString() { return "<native fn>"; }
-    });
+    };
+    globals.define("print", print);
+    globals.define("know", print);
+    globals.define("say", print);
   }
 
   void interpret(List<Stmt> statements) {
