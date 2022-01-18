@@ -13,7 +13,7 @@ enum TokenType {
   COLON,
   COMMA, DOT,
   EMDASH,
-  SEMICOLON,
+  // SEMICOLON,
   // NEWLINE,
   AMPERSAND,
 
@@ -30,6 +30,8 @@ enum TokenType {
   TRUE, FALSE, NOTHING, // values
   // MAYBE,
   NOT,
+
+  NEWLINE,
 
   EOF
 }
