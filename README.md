@@ -1,6 +1,6 @@
 # jcoem
 
-This is the Java implementation of my Coem language. (Planning on a JavaScript implementation soon.) This was built by following the first half of Robert Nystrom's super accessible [_Crafting Interpreters_](https://craftinginterpreters.com/) and customising it according to my intentions for the language.
+This is the Java implementation of my Coem language. This was built by following the first half of Robert Nystrom's super accessible [_Crafting Interpreters_](https://craftinginterpreters.com/) and customising it according to my intentions for the language.
 
 ## Setup
 
