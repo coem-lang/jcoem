@@ -24,7 +24,7 @@ enum TokenType {
   // Keywords.
   AND, OR, // logic
   IS, AM, ARE, // comparison
-  IF, ELSE, FOR, WHILE, // control flow
+  IF, ELSE, WHILE, // control flow
   LET, BE, // variables
   TO, 
   TRUE, FALSE, NOTHING, // values

@@ -334,7 +334,6 @@ class Parser {
       switch (peek().type) {
         case TO:
         case LET:
-        case FOR:
         case IF:
         case WHILE:
         case AMPERSAND:

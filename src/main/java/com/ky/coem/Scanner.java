@@ -25,7 +25,6 @@ class Scanner {
     keywords = new HashMap<>();
     keywords.put("and",    AND);
     keywords.put("else",   ELSE);
-    keywords.put("for",    FOR);
     keywords.put("to",     TO);
     keywords.put("if",     IF);
     keywords.put("or",     OR);

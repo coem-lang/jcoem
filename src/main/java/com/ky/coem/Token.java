@@ -36,7 +36,6 @@ class Token {
       case ARE: return "EQUALS";
       case IF: return "IF";
       case ELSE: return "ELSE";
-      case FOR: return "FOR";
       case WHILE: return "WHILE";
       case LET: return "LET";
       case BE: return "BE";
