@@ -66,7 +66,6 @@ class Scanner {
       case ':': addToken(COLON); break;
       case ',': addToken(COMMA); break;
       case '.': addToken(DOT); break;
-      // case ';': addToken(SEMICOLON); break;
       case '&': addToken(AMPERSAND); break;
       case '†':
         while (peek() != '\n' && !isAtEnd()) advance();
@@ -96,12 +95,10 @@ class Scanner {
   }
 
   private void addToken(TokenType type) {
-    // System.out.println(type);
     addToken(type, null);
   }
 
   private void addToken(TokenType type, Object literal) {
-    // System.out.println(literal);
     String text = source.substring(start, current);
     tokens.add(new Token(type, text, literal, line));
   }
@@ -174,7 +171,7 @@ class Scanner {
       (c >= 'a' && c <= 'z') ||
       (c == '(' || c == ')') ||
       (c == '[' || c == ']') ||
-      (c == '?' || c == '*' || c == '+')
+      (c == '|' || c == '?' || c == '*' || c == '+')
     );
   }
 
