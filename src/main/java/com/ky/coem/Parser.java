@@ -25,7 +25,7 @@ class Parser {
     List<Stmt> statements = new ArrayList<>();
     while (!isAtEnd()) {
       while (check(NEWLINE)) {
-        consume(NEWLINE, "Expect newline between statements");
+        consume(NEWLINE, "Expect newline between statements.");
       }
       if (!isAtEnd()) {
         statements.add(declaration());
@@ -249,9 +249,31 @@ class Parser {
 
   private Stmt expressionStatement() {
     Expr expr = expression();
-    return new Stmt.Print(expr);
-    // Token print = new Token(IDENTIFIER, "print", null, expr)
-    // return new Stmt.Function()
+
+    // if it's a bare expression, print the expression
+    // but don't print a print statement
+    Expr wrapped = expr;
+    if (expr instanceof Expr.Call) {
+      Expr.Call call = (Expr.Call)expr;
+      Expr.Variable callee = (Expr.Variable)call.callee;
+      if (!callee.name.lexeme.equals("print")) {
+        wrapped = printExpression(expr);
+      }
+    } else {
+      wrapped = printExpression(expr);
+    }
+
+    return new Stmt.Expression(wrapped);
+  }
+
+  private Expr printExpression(Expr expr) {
+    Token printToken = new Token(IDENTIFIER, "print", null, peek().line);
+    Expr printExpr = new Expr.Variable(printToken);
+    Token dash = new Token(EMDASH, "—", null, peek().line);
+    List<Expr> arguments = new ArrayList<>();
+    arguments.add(expr);
+    Expr call = new Expr.Call(printExpr, dash, arguments);
+    return call;
   }
 
   private boolean match(TokenType... types) {
