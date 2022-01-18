@@ -26,6 +26,7 @@ class Token {
       case EMDASH: return "EMDASH";
       case NEWLINE: return "NEWLINE";
       case AMPERSAND: return "AMPERSAND";
+      case POUND: return "POUND";
       case IDENTIFIER: return "IDENTIFIER";
       case STRING: return "STRING";
       case AND: return "AND";
