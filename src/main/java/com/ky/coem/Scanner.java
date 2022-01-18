@@ -82,7 +82,11 @@ class Scanner {
       case '“': string(); break;
 
       default:
-        identifier();
+        if (isIdentifierChar(c)) {
+          identifier();
+        } else {
+          Coem.error(line, "Unexpected character.");
+        }
         break;
     }
   }
