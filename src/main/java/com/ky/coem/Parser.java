@@ -15,7 +15,7 @@ class Parser {
 
   private final List<Token> tokens;
   private int current = 0;
-  private boolean isConditionStarted = false;
+  private boolean isParamListStarted = false;
 
   Parser(List<Token> tokens) {
     this.tokens = tokens;
@@ -145,7 +145,7 @@ class Parser {
   private Expr call() {
     Expr expr = primary();
 
-    if (!isConditionStarted) {
+    if (!isParamListStarted) {
       while (true) {
         if (match(EMDASH)) {
           expr = finishCall(expr);
@@ -182,7 +182,9 @@ class Parser {
         if (arguments.size() >= 255) {
           error(peek(), "Can't have more than 255 arguments.");
         }
-        arguments.add(primary());
+        isParamListStarted = true;
+        arguments.add(expression());
+        isParamListStarted = false;
       } while (match(COMMA));
     }
 
@@ -193,7 +195,7 @@ class Parser {
 
   private Stmt statement() {
     if (match(IF)) return ifStatement();
-    if (match(PRINT, KNOW, SAY)) return printStatement();
+    // if (match(PRINT, KNOW, SAY)) return printStatement();
     if (match(AMPERSAND)) return returnStatement();
     if (match(WHILE)) return whileStatement();
     if (match(COLON)) return new Stmt.Block(block());
@@ -203,10 +205,10 @@ class Parser {
 
   private Stmt ifStatement() {
     consume(EMDASH, "Expect '—' after 'if'.");
-    isConditionStarted = true;
+    isParamListStarted = true;
     Expr condition = expression();
     consume(EMDASH, "Expect '—' after if condition.");
-    isConditionStarted = false;
+    isParamListStarted = false;
 
     Stmt thenBranch = statement();
     Stmt elseBranch = null;
@@ -217,10 +219,10 @@ class Parser {
     return new Stmt.If(condition, thenBranch, elseBranch);
   }
 
-  private Stmt printStatement() {
-    Expr value = expression();
-    return new Stmt.Print(value);
-  }
+  // private Stmt printStatement() {
+  //   Expr value = expression();
+  //   return new Stmt.Print(value);
+  // }
 
   private Stmt returnStatement() {
     Token ampersand = previous();
@@ -234,10 +236,10 @@ class Parser {
 
   private Stmt whileStatement() {
     consume(EMDASH, "Expect '—' after 'while'.");
-    isConditionStarted = true;
+    isParamListStarted = true;
     Expr condition = expression();
     consume(EMDASH, "Expect '—' after condition.");
-    isConditionStarted = false;
+    isParamListStarted = false;
     Stmt body = statement();
 
     return new Stmt.While(condition, body);
@@ -246,6 +248,8 @@ class Parser {
   private Stmt expressionStatement() {
     Expr expr = expression();
     return new Stmt.Print(expr);
+    // Token print = new Token(IDENTIFIER, "print", null, expr)
+    // return new Stmt.Function()
   }
 
   private boolean match(TokenType... types) {
@@ -304,9 +308,9 @@ class Parser {
         case FOR:
         case IF:
         case WHILE:
-        case PRINT:
-        case KNOW:
-        case SAY:
+        // case PRINT:
+        // case KNOW:
+        // case SAY:
         case AMPERSAND:
           return;
         default:
