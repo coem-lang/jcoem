@@ -41,9 +41,9 @@ class Token {
       case LET: return "LET";
       case BE: return "BE";
       case TO: return "TO";
-      case PRINT:
-      case KNOW:
-      case SAY: return "PRINT";
+      // case PRINT:
+      // case KNOW:
+      // case SAY: return "PRINT";
       case TRUE: return "TRUE";
       case FALSE: return "FALSE";
       case NOTHING: return "NOTHING";

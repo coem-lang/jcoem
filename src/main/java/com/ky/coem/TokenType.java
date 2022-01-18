@@ -26,7 +26,7 @@ enum TokenType {
   IF, ELSE, FOR, WHILE, // control flow
   LET, BE, // variables
   TO, 
-  PRINT, KNOW, SAY,
+  // PRINT, KNOW, SAY,
   TRUE, FALSE, NOTHING, // values
   // MAYBE,
   NOT,

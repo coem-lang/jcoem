@@ -29,9 +29,9 @@ class Scanner {
     keywords.put("to",     TO);
     keywords.put("if",     IF);
     keywords.put("or",     OR);
-    keywords.put("print",  PRINT);
-    keywords.put("know",  KNOW);
-    keywords.put("say",  SAY);
+    // keywords.put("print",  PRINT);
+    // keywords.put("know",  KNOW);
+    // keywords.put("say",  SAY);
     keywords.put("true",   TRUE);
     keywords.put("false",  FALSE);
     keywords.put("nothing", NOTHING);
@@ -107,7 +107,7 @@ class Scanner {
     while (isIdentifierChar(peek())) advance();
 
     String text = source.substring(start, current);
-    System.out.println(text);
+    // System.out.println(text);
     TokenType type = keywords.get(text);
     if (type == null) type = IDENTIFIER;
     addToken(type);
