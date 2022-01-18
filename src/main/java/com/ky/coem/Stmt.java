@@ -96,9 +96,9 @@ abstract class Stmt {
     final Expr value;
   }
   static class Var extends Stmt {
-    Var(Token name, Expr initializer) {
+    Var(Token name, Expr value) {
       this.name = name;
-      this.initializer = initializer;
+      this.value = value;
     }
 
     @Override
@@ -107,7 +107,7 @@ abstract class Stmt {
     }
 
     final Token name;
-    final Expr initializer;
+    final Expr value;
   }
   static class While extends Stmt {
     While(Expr condition, Stmt body) {
