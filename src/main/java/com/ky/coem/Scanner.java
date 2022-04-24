@@ -138,7 +138,7 @@ class Scanner {
       advance();
     }
 
-    String text = source.substring(start + 2, current);
+    String text = source.substring(start + 1, current);
     addToken(COMMENT, text);
   }
 
