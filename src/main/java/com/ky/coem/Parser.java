@@ -37,6 +37,7 @@ class Parser {
 
   private Stmt declaration() {
     try {
+      if (match(DAGGER)) return comment();
       if (match(POUND)) return directive();
       if (match(TO)) return function();
       if (match(LET)) return varDeclaration();
@@ -55,6 +56,11 @@ class Parser {
     }
 
     throw error(peek(), "Expect directive name after pound.");
+  }
+
+  private Stmt.Comment comment() {
+    Token text = advance();
+    return new Stmt.Comment(text);
   }
 
   private Stmt.Function function() {

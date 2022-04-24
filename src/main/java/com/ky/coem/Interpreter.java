@@ -216,6 +216,11 @@ class Interpreter implements Expr.Visitor<Object>,
   }
 
   @Override
+  public Void visitCommentStmt(Stmt.Comment stmt) {
+    return null;
+  }
+
+  @Override
   public Object visitBinaryExpr(Expr.Binary expr) {
     Object left = evaluate(expr.left);
     Object right = evaluate(expr.right); 

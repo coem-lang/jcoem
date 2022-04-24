@@ -72,6 +72,5 @@ class Environment {
 
     // define new in current environment
     values.put(pat, value);
-
   }
 }

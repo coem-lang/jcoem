@@ -27,8 +27,10 @@ class Token {
       case NEWLINE: return "NEWLINE";
       case AMPERSAND: return "AMPERSAND";
       case POUND: return "POUND";
+      case DAGGER: return "DAGGER";
       case IDENTIFIER: return "IDENTIFIER";
       case STRING: return "STRING";
+      case COMMENT: return "COMMENT";
       case AND: return "AND";
       case OR: return "OR";
       case IS:

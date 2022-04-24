@@ -31,7 +31,8 @@ public class GenerateAst {
       "Return     : Token keyword, Expr value",
       "Var        : Token name, Expr value",
       "While      : Expr condition, Stmt body",
-      "Directive  : Token name, Token value"
+      "Directive  : Token name, Token value",
+      "Comment    : Token text"
     ));
   }
 

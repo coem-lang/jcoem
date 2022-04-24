@@ -12,6 +12,7 @@ abstract class Stmt {
     R visitVarStmt(Var stmt);
     R visitWhileStmt(While stmt);
     R visitDirectiveStmt(Directive stmt);
+    R visitCommentStmt(Comment stmt);
   }
   static class Block extends Stmt {
     Block(List<Stmt> statements) {
@@ -124,6 +125,18 @@ abstract class Stmt {
 
     final Token name;
     final Token value;
+  }
+  static class Comment extends Stmt {
+    Comment(Token text) {
+      this.text = text;
+    }
+
+    @Override
+    <R> R accept(Visitor<R> visitor) {
+      return visitor.visitCommentStmt(this);
+    }
+
+    final Token text;
   }
 
   abstract <R> R accept(Visitor<R> visitor);

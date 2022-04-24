@@ -64,9 +64,8 @@ class Scanner {
       case '.': addToken(DOT); break;
       case '&': addToken(AMPERSAND); break;
       case '#': addToken(POUND); break;
-      case '†':
-        while (peek() != '\n' && !isAtEnd()) advance();
-        break;
+      
+      case '†': comment(); break;
         
       case ' ':
       case '\r':
@@ -108,7 +107,6 @@ class Scanner {
     while (isIdentifierChar(peek())) advance();
 
     String text = source.substring(start, current);
-    // System.out.println(text);
     TokenType type = keywords.get(text);
     if (type == null) type = IDENTIFIER;
     addToken(type);
@@ -131,6 +129,17 @@ class Scanner {
     // Trim the surrounding quotes.
     String value = source.substring(start + 1, current - 1);
     addToken(STRING, value);
+  }
+
+  private void comment() {
+    addToken(DAGGER);
+
+    while (peek() != '\n' && !isAtEnd()) {
+      advance();
+    }
+
+    String text = source.substring(start + 2, current);
+    addToken(COMMENT, text);
   }
 
   private boolean match(char expected) {

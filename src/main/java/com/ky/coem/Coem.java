@@ -57,15 +57,18 @@ public class Coem {
     List<Token> tokens = scanner.scanTokens();
 
     // (print the tokens)
-    for (Token token : tokens) {
-      System.out.print(token);
-      System.out.print(", ");
-    }
-    System.out.println();
+    // for (Token token : tokens) {
+    //   System.out.print(token);
+    //   System.out.print(", ");
+    // }
+    // System.out.println();
 
     // turn list of tokens into list of statements
     Parser parser = new Parser(tokens);
     List<Stmt> statements = parser.parse();
+    // for (Stmt stmt : statements) {
+    //   System.out.println(stmt);
+    // }
 
     // Stop if there was a syntax error.
     if (hadError) return;

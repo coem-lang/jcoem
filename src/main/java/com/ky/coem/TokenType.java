@@ -16,6 +16,7 @@ enum TokenType {
 
   // Literals.
   IDENTIFIER, STRING,
+  COMMENT,
 
   // Keywords.
   AND, OR, // logic
@@ -27,6 +28,8 @@ enum TokenType {
   NOT,
 
   NEWLINE,
+
+  DAGGER,
 
   EOF
 }

@@ -86,6 +86,11 @@ class AstPrinter implements Expr.Visitor<String>, Stmt.Visitor<String> {
   }
 
   @Override
+  public String visitCommentStmt(Stmt.Comment stmt) {
+    return parenthesize2("comment", stmt.text.literal);
+  }
+
+  @Override
   public String visitBinaryExpr(Expr.Binary expr) {
     return parenthesize(expr.operator.lexeme,
                         expr.left, expr.right);
