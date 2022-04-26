@@ -65,9 +65,6 @@ public class Coem {
     // turn list of tokens into list of statements
     Parser parser = new Parser(tokens);
     List<Stmt> statements = parser.parse();
-    // for (Stmt stmt : statements) {
-    //   System.out.println(stmt);
-    // }
 
     // Stop if there was a syntax error.
     if (hadError) return;

@@ -24,6 +24,7 @@ class Environment {
   private final Map<Pattern, Object> values = new HashMap<>();
 
   Object get(Token name) {
+    // try to get variable in current environment
     Map.Entry<Pattern, Object> set = getSet(name.lexeme);
     if (set != null) {
       Object value = set.getValue();
@@ -34,11 +35,20 @@ class Environment {
       return set.getValue();
     }
 
-    // if not found in this environment, try enclosing one
-    if (enclosing != null) return enclosing.get(name);
+    // if not found in this environment, try the enclosing one
+    // if (enclosing != null) return enclosing.get(name);
+    if (enclosing != null) {
+      // check if variable exists in enclosing environment
+      if (enclosing.getSet(name.lexeme) != null) {
+        return enclosing.get(name);
+      }
+    }
+
+    // return the variable name as a string
+    return name.lexeme;
 
     // if not found after recursively walking up the chain, throw error
-    throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
+    // throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
   }
 
   Map.Entry<Pattern, Object> getSet(String name) {
