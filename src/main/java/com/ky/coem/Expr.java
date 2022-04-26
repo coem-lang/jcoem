@@ -86,8 +86,9 @@ abstract class Expr {
     final Expr right;
   }
   static class Variable extends Expr {
-    Variable(Token name) {
+    Variable(Token name, int line) {
       this.name = name;
+      this.line = line;
     }
 
     @Override
@@ -96,6 +97,7 @@ abstract class Expr {
     }
 
     final Token name;
+    final int line;
   }
 
   abstract <R> R accept(Visitor<R> visitor);

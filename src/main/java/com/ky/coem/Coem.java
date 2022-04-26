@@ -14,7 +14,6 @@ import java.util.List;
 
 public class Coem {
 
-  private static final Interpreter interpreter = new Interpreter();
   static boolean hadError = false;
   static boolean hadRuntimeError = false;
 
@@ -78,9 +77,13 @@ public class Coem {
     for (Stmt statement : statements) {
       System.out.println(printer.print(statement));
     }
+    System.out.println();
 
     // interpret the statements
+    Interpreter interpreter = new Interpreter(source);
     interpreter.interpret(statements);
+    String echo = interpreter.getEcho();
+    System.out.println(echo);
   }
 
   static void error(int line, String message) {

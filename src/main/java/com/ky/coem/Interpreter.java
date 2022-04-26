@@ -9,21 +9,37 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.BooleanSupplier;
 
-// class Interpreter implements Expr.Visitor<Object> {
 class Interpreter implements Expr.Visitor<Object>,
                              Stmt.Visitor<Void> {
 
   final Environment globals = new Environment();
   private Environment environment = globals;
+  
+  String source;
+  String[][] lines;
+  String echo;
 
-  Interpreter() {
+  Interpreter(String source) {
+    this.source = source;
+    this.echo = source;
+    String[] linesWhole = source.split("\n");
+    lines = new String[linesWhole.length][2];
+    for (int i = 0; i < linesWhole.length; i++) {
+      String line = linesWhole[i];
+      if (line.strip().indexOf(" †") > -1) {
+        lines[i] = line.split(" †");
+      } else {
+        lines[i][0] = line;
+      }
+    }
+
     // clock
     globals.define("clock", new CoemCallable() {
       @Override
       public int arity() { return 0; }
       
       @Override
-      public Object call(Interpreter interpreter, List<Object> arguments) {
+      public Object call(Interpreter interpreter, List<Object> arguments, Expr callee) {
         return (double)System.currentTimeMillis() / 1000.0;
       }
 
@@ -41,11 +57,24 @@ class Interpreter implements Expr.Visitor<Object>,
       public int arity() { return 1; }
 
       @Override
-      public Object call(Interpreter interpreter, List<Object> arguments) {
-        for (int i = 0; i < arguments.size(); i++) {
-          System.out.print(arguments.get(i));
+      public Object call(Interpreter interpreter, List<Object> arguments, Expr callee) {
+        String print = " ";
+        int line = ((Expr.Variable)callee).line - 1;
+        if (arguments.size() >= 1) {
+          print += arguments.get(0);
+          if (arguments.size() > 1) {
+            for (int i = 1; i < arguments.size(); i++) {
+              print += " " + arguments.get(i);
+            }
+          }
         }
-        System.out.println();
+
+        if (lines[line][1] != null) {
+          lines[line][1] += print;
+        } else {
+          lines[line][1] = print;
+        }
+
         return null;
       }
 
@@ -269,6 +298,20 @@ class Interpreter implements Expr.Visitor<Object>,
       }
     }
 
-    return function.call(this, arguments);
+    return function.call(this, arguments, expr.callee);
+  }
+
+  public String getEcho() {
+    String echo = "";
+    for (int i = 0; i < lines.length; i++) {
+      if (lines[i][1] != null) {
+        String line = String.join(" †", lines[i]);
+        echo += line;
+      } else {
+        echo += lines[i][0];
+      }
+      echo += "\n";
+    }
+    return echo;
   }
 }

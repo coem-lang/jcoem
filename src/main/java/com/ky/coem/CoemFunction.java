@@ -22,7 +22,8 @@ class CoemFunction implements CoemCallable {
   }
 
   @Override
-  public Object call(Interpreter interpreter, List<Object> arguments) {
+  // public Object call(Interpreter interpreter, List<Object> arguments) {
+  public Object call(Interpreter interpreter, List<Object> arguments, Expr callee) {
     Environment environment = new Environment(closure);
     for (int i = 0; i < declaration.params.size(); i++) {
       environment.define(declaration.params.get(i).lexeme, arguments.get(i));

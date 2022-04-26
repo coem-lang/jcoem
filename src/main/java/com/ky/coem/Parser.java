@@ -192,7 +192,7 @@ class Parser {
     }
 
     if (match(IDENTIFIER)) {
-      return new Expr.Variable(previous());
+      return new Expr.Variable(previous(), previous().line);
     }
 
     throw error(peek(), "Expect expression.");
@@ -272,7 +272,8 @@ class Parser {
     if (expr instanceof Expr.Call) {
       Expr.Call call = (Expr.Call)expr;
       Expr.Variable callee = (Expr.Variable)call.callee;
-      if (!callee.name.lexeme.equals("print")) {
+      String calleeName = callee.name.lexeme;
+      if (!(calleeName.equals("print") || calleeName.equals("know") || calleeName.equals("say"))) {
         wrapped = printExpression(expr);
       }
     } else {
@@ -284,7 +285,7 @@ class Parser {
 
   private Expr printExpression(Expr expr) {
     Token printToken = new Token(IDENTIFIER, "print", null, peek().line);
-    Expr printExpr = new Expr.Variable(printToken);
+    Expr printExpr = new Expr.Variable(printToken, printToken.line);
     Token dash = new Token(EMDASH, "—", null, peek().line);
     List<Expr> arguments = new ArrayList<>();
     arguments.add(expr);

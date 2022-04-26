@@ -14,25 +14,25 @@ public class GenerateAst {
     String outputDir = args[0];
     
     defineAst(outputDir, "Expr", Arrays.asList(
-      "Binary   : Expr left, Token operator, Expr right",
-      "Call     : Expr callee, Token dash, List<Expr> arguments",
+      "Binary   : Expr left, Token operator, Expr right, int line",
+      "Call     : Expr callee, Token dash, List<Expr> arguments, int line",
       
-      "Literal  : Object value",
-      "Logical  : Expr left, Token operator, Expr right",
-      "Unary    : Token operator, Expr right",
-      "Variable : Token name"
+      "Literal  : Object value, int line",
+      "Logical  : Expr left, Token operator, Expr right, int line",
+      "Unary    : Token operator, Expr right, int line",
+      "Variable : Token name, int line"
     ));
 
     defineAst(outputDir, "Stmt", Arrays.asList(
-      "Block      : List<Stmt> statements",
-      "Expression : Expr expression",
-      "Function   : Token name, List<Token> params, List<Stmt> body",
-      "If         : Expr condition, Stmt thenBranch, Stmt elseBranch",
-      "Return     : Token keyword, Expr value",
-      "Var        : Token name, Expr value",
-      "While      : Expr condition, Stmt body",
-      "Directive  : Token name, Token value",
-      "Comment    : Token text"
+      "Block      : List<Stmt> statements, int line",
+      "Expression : Expr expression, int line",
+      "Function   : Token name, List<Token> params, List<Stmt> body, int line",
+      "If         : Expr condition, Stmt thenBranch, Stmt elseBranch, int line",
+      "Return     : Token keyword, Expr value, int line",
+      "Var        : Token name, Expr value, int line",
+      "While      : Expr condition, Stmt body, int line",
+      "Directive  : Token name, Token value, int line",
+      "Comment    : Token text, int line"
     ));
   }
 
