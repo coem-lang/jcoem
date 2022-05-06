@@ -270,12 +270,12 @@ class Parser {
     // but don't print a print statement
     Expr wrapped = expr;
     if (expr instanceof Expr.Call) {
-      Expr.Call call = (Expr.Call)expr;
-      Expr.Variable callee = (Expr.Variable)call.callee;
-      String calleeName = callee.name.lexeme;
-      if (!(calleeName.equals("print") || calleeName.equals("know") || calleeName.equals("say"))) {
-        wrapped = printExpression(expr);
-      }
+      // Expr.Call call = (Expr.Call)expr;
+      // Expr.Variable callee = (Expr.Variable)call.callee;
+      // String calleeName = callee.name.lexeme;
+      // if (!(calleeName.equals("print") || calleeName.equals("know") || calleeName.equals("say"))) {
+      //   wrapped = printExpression(expr);
+      // }
     } else {
       wrapped = printExpression(expr);
     }

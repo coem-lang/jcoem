@@ -84,7 +84,8 @@ class Scanner {
         if (isIdentifierChar(c)) {
           identifier();
         } else {
-          Coem.error(line, "Unexpected character.");
+          // Coem.error(line, "unexpected character");
+          Coem.scannerError(line, "unexpected character");
         }
         break;
     }
@@ -119,7 +120,8 @@ class Scanner {
     }
 
     if (isAtEnd()) {
-      Coem.error(line, "Unterminated string.");
+      // Coem.error(line, "Unterminated string.");
+      Coem.scannerError(line, "unterminated string");
       return;
     }
 

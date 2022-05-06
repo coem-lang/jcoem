@@ -14,6 +14,8 @@ import java.util.List;
 
 public class Coem {
 
+  static String theSource;
+
   static boolean hadError = false;
   static boolean hadRuntimeError = false;
 
@@ -51,9 +53,13 @@ public class Coem {
   }
 
   private static void run(String source) {
+    theSource = source;
+    
     // turn source string into list of tokens
     Scanner scanner = new Scanner(source);
     List<Token> tokens = scanner.scanTokens();
+
+    if (hadError) return;
 
     // (print the tokens)
     // for (Token token : tokens) {
@@ -70,11 +76,11 @@ public class Coem {
     if (hadError) return;
 
     // (print the AST)
-    AstPrinter printer = new AstPrinter();
-    for (Stmt statement : statements) {
-      System.out.println(printer.print(statement));
-    }
-    System.out.println();
+    // AstPrinter printer = new AstPrinter();
+    // for (Stmt statement : statements) {
+    //   System.out.println(printer.print(statement));
+    // }
+    // System.out.println();
 
     // interpret the statements
     Interpreter interpreter = new Interpreter(source);
@@ -85,6 +91,25 @@ public class Coem {
 
   static void error(int line, String message) {
     report(line, "", message);
+  }
+
+  // add error message as a comment below the associated line
+  static void scannerError(int line, String message) {
+    String[] lines = theSource.split("\n");
+    int lineIndex = line - 1;
+    String[] newLines = new String[lines.length + 1];
+    int counter;
+    for (counter = 0; counter <= lineIndex; counter++) {
+      newLines[counter] = lines[counter];
+    }
+    newLines[counter] = "† " + message;
+    for (counter = counter + 1; counter < lines.length + 1; counter++) {
+      newLines[counter] = lines[counter - 1];
+    }
+    String output = String.join("\n", newLines);
+    System.out.println(output);
+
+    hadError = true;
   }
 
   private static void report(int line, String where,
