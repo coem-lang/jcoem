@@ -2,6 +2,8 @@
 
 This is the Java implementation of my Coem language. This was built by following the first half of Robert Nystrom's super accessible [_Crafting Interpreters_](https://craftinginterpreters.com/) and customising it according to my intentions for the language.
 
+**NOTE: this was great for following along in the book, but I'm not actively developing here at the moment. I'm keeping it open in case I need it, but will probably archive it soon. Head over to [jscoem](https://github.com/coem-lang/jscoem) instead!**
+
 ## Setup
 
 If you have a setup for building Java applications, feel free to use that!
